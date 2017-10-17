@@ -1,8 +1,8 @@
 [![Build Status](https://qa.nuxeo.org/jenkins/buildStatus/icon?job=Misc/tools_nuxeo-studio-components-common-master)](https://qa.nuxeo.org/jenkins/job/Misc/job/tools_nuxeo-studio-components-common-master/)
 
-# About / Synopsis
+# About
 
-* What is it, what does it do / Abstract
+Library that extracts Nuxeo Components to Nuxeo Studio's registries format
 
 # Code
 
@@ -16,9 +16,8 @@ TODO
 
 # Contributing / Reporting issues
 
-Link to JIRA component (or project if there is no component for that project).
-Sample: https://jira.nuxeo.com/browse/NXBT/component/16055/
-Sample: https://jira.nuxeo.com/secure/CreateIssue!default.jspa?project=NXBT
+- https://jira.nuxeo.com/browse/NXBT/component/16055/
+- https://jira.nuxeo.com/secure/CreateIssue!default.jspa?project=NXBT
 
 # License
 
