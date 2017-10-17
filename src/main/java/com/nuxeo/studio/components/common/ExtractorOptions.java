@@ -48,6 +48,11 @@ public class ExtractorOptions {
         return token;
     }
 
+    /**
+     * Sets Nuxeo Connect Authentication Token
+     *
+     * @param token
+     */
     public void setToken(String token) {
         this.token = token;
     }
@@ -56,6 +61,11 @@ public class ExtractorOptions {
         return symbolicName;
     }
 
+    /**
+     * Sets target Nuxeo Studio Symbolic name
+     *
+     * @param symbolicName
+     */
     public void setSymbolicName(String symbolicName) {
         this.symbolicName = symbolicName;
     }
@@ -64,6 +74,11 @@ public class ExtractorOptions {
         return connectUrl;
     }
 
+    /**
+     * Sets Nuxeo Connect URL
+     *
+     * @param connectUrl
+     */
     public void setConnectUrl(String connectUrl) {
         this.connectUrl = connectUrl;
     }
@@ -72,6 +87,11 @@ public class ExtractorOptions {
         return buildDirectory;
     }
 
+    /**
+     * Sets folder where project is build, and output file will be written
+     *
+     * @param buildDirectory
+     */
     public void setBuildDirectory(String buildDirectory) {
         this.buildDirectory = buildDirectory;
     }
@@ -80,6 +100,11 @@ public class ExtractorOptions {
         return output;
     }
 
+    /**
+     * Sets file output name
+     *
+     * @param output
+     */
     public void setOutput(String output) {
         this.output = output;
     }
@@ -88,6 +113,11 @@ public class ExtractorOptions {
         return failOnEmpty;
     }
 
+    /**
+     * Sets if an empty extract may throw an exception if empty
+     *
+     * @param failOnEmpty
+     */
     public void setFailOnEmpty(Boolean failOnEmpty) {
         this.failOnEmpty = failOnEmpty;
     }
@@ -96,6 +126,11 @@ public class ExtractorOptions {
         return extract;
     }
 
+    /**
+     * Sets extracted categories. Multiple values must be separate using a coma.
+     *
+     * @param extract
+     */
     public void setExtract(String extract) {
         this.extract = extract;
     }
