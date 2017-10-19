@@ -19,10 +19,35 @@
 
 package com.nuxeo.studio.components.common.mapper.impl;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.nuxeo.studio.components.common.mapper.ExtensionMapper;
 import com.nuxeo.studio.components.common.mapper.descriptors.EventListenerDescriptor;
 
 public class EventMapper extends ExtensionMapper {
+    public static List<String> SYSTEM_EVENTS;
+
+    static {
+        // Registering Common System events from Nuxeo classes in order to skip them during export as already
+        // present in Studio
+        // XXX Must be tied from an external place... Studio, lib, whatever.
+        // For now extracted from {@code org.nuxeo.ecm.core.api.LifeCycleConstants} and {@code
+        // org.nuxeo.ecm.core.api.event.DocumentEventTypes}
+        SYSTEM_EVENTS = Arrays.asList("aboutToCreate", "emptyDocumentModelCreated", "documentCreated", "aboutToImport",
+                "documentImported", "aboutToRemove", "documentRemoved", "documentRemovalCanceled",
+                "aboutToRemoveVersion", "versionRemoved", "beforeDocumentModification",
+                "beforeDocumentSecurityModification", "documentModified", "documentSecurityUpdated", "documentLocked",
+                "documentUnlocked", "aboutToCopy", "documentCreatedByCopy", "documentDuplicated", "aboutToMove",
+                "documentMoved", "documentPublished", "documentProxyPublished", "documentProxyUpdated",
+                "sectionContentPublished", "beforeRestoringDocument", "documentRestored", "sessionSaved",
+                "childrenOrderChanged", "aboutToCheckout", "documentCheckedOut", "incrementBeforeUpdate",
+                "aboutToCheckIn", "documentCheckedIn", "subscriptionAssigned", "emailDocumentSend",
+                "userWorkspaceCreated", "binaryTextUpdated", "documentTagUpdated", "ACEStatusUpdated", "deleted",
+                "delete", "undelete", "lifecycle_transition_event", "from", "to", "transition", "documentUndeleted",
+                "initialLifecycleState");
+    }
+
     @Override
     public void registerDescriptors() {
         registerDescriptor("events", EventListenerDescriptor.class);
@@ -35,6 +60,8 @@ public class EventMapper extends ExtensionMapper {
 
     @Override
     public boolean isEnabled(Object contribution) {
-        return ((EventListenerDescriptor)contribution).isEnabled();
+        EventListenerDescriptor eld = (EventListenerDescriptor) contribution;
+        return eld.isEnabled() && eld.getEvents() != null
+                && !eld.getEvents().stream().allMatch(SYSTEM_EVENTS::contains);
     }
 }

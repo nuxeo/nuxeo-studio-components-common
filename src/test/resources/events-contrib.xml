@@ -12,5 +12,10 @@
       <event>MyFirstEvent</event>
       <event>MySecondEvent</event>
     </listener>
+
+    <listener name="otherListenerWithoutNewEvent" async="true" postCommit="true"
+              class="org.nuxeo.ecm.core.lifecycle.event.BulkLifeCycleChangeListener">
+      <event>documentCreatedByCopy</event>
+    </listener>
   </extension>
 </component>
