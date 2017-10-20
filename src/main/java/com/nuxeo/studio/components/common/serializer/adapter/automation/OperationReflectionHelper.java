@@ -101,9 +101,9 @@ public class OperationReflectionHelper {
     }
 
     public static String getParamDocumentationType(String signature, boolean isIterable) {
-        SignatureAttribute.ObjectType sign;
+        SignatureAttribute.Type sign;
         try {
-            sign = SignatureAttribute.toFieldSignature(signature);
+            sign = SignatureAttribute.toTypeSignature(signature);
         } catch (BadBytecode e) {
             throw new RuntimeException(e);
         }

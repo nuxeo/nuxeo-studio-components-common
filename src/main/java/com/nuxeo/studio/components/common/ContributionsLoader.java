@@ -26,6 +26,8 @@ import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -49,7 +51,12 @@ public class ContributionsLoader {
     public void load() {
         if (StringUtils.isNotBlank(opts.getJarFile())) {
             // Based on external jarFile
-            Arrays.stream(opts.getJarFile().split(",")).forEach(this::loadFromJarFile);
+            List<String> files = Arrays.stream(opts.getJarFile().split(",")) //
+                                       .filter(s -> s.endsWith(".jar"))
+                                       .collect(Collectors.toList());
+            ExtractorContext.instance.addExternalSources(files);
+
+            files.forEach(this::loadFromJarFile);
         } else {
             // Based on Project (Standalone project, other project)
             opts.getSourcesDirectory().forEach(this::loadFromDirectory);
@@ -63,11 +70,6 @@ public class ContributionsLoader {
         }
 
         URI uri = URI.create("jar:file:" + file.getAbsolutePath());
-        loadFromURI(uri);
-    }
-
-    protected void loadFromURI(URI uri) {
-        ExtractorContext.instance.addExternalSource(uri);
         try (FileSystem fs = FileSystems.newFileSystem(uri, new HashMap<>())) {
             new BundleWalker(fs.getPath("/")).getRegistrationInfos().forEach(holder::load);
         } catch (IOException e) {

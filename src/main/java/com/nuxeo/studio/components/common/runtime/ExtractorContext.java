@@ -30,6 +30,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -70,7 +71,7 @@ public class ExtractorContext extends Context {
      * @param additionalUrls Additional urls as string to enhance current UrlClassLoader
      * @throws IOException When unable to reach an url passed as parameter
      */
-    public static void initCustomClassLoader(Set<String> additionalUrls) throws IOException {
+    public static void initCustomClassLoader(Collection<String> additionalUrls) throws IOException {
         List<URL> urlElements = new ArrayList<>();
 
         for (String s : additionalUrls) {
@@ -82,6 +83,10 @@ public class ExtractorContext extends Context {
                 // Without using a FS, scheme like jar:file are not easily exportable as URL
                 try (FileSystem fs = FileSystems.newFileSystem(uri, new HashMap<>())) {
                     url = fs.getPath("").toUri().toURL();
+                } catch (UnsupportedOperationException e) {
+                    log.info("Unable to add file" + uri + " to custom classpath.");
+                    log.debug(e, e);
+                    continue;
                 }
             }
 
@@ -97,6 +102,15 @@ public class ExtractorContext extends Context {
         } else {
             return Thread.currentThread().getContextClassLoader();
         }
+    }
+
+    public void addExternalSources(Collection<String> sources) {
+        try {
+            initCustomClassLoader(sources);
+        } catch (IOException e) {
+            log.warn(e, e);
+        }
+        sources.stream().map(URI::create).forEach(extResourcesSources::add);
     }
 
     public void addExternalSource(URI source) {

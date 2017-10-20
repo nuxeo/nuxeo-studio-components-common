@@ -25,6 +25,6 @@ import com.nuxeo.studio.components.common.mapper.xmap.annotation.XObject;
 public class OperationDescriptor {
 
     @XNode("@class")
-    public Class<?> type;
+    public String type;
 
 }
