@@ -24,9 +24,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 
 import org.junit.Test;
-import com.nuxeo.studio.components.common.serializer.adapter.automation.Constants;
-import com.nuxeo.studio.components.common.serializer.adapter.automation.OperationDocumentation;
-import com.nuxeo.studio.components.common.serializer.adapter.automation.OperationReader;
+import org.nuxeo.studio.components.common.serializer.adapter.automation.Constants;
+import org.nuxeo.studio.components.common.serializer.adapter.automation.OperationDocumentation;
+import org.nuxeo.studio.components.common.serializer.adapter.automation.OperationReader;
 
 public class TestOperationReader {
 
