@@ -19,13 +19,14 @@
 
 package org.nuxeo.studio.components.common.mapper.impl;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.nuxeo.studio.components.common.mapper.ExtensionMapper;
 import org.nuxeo.studio.components.common.mapper.descriptors.DocumentTypeDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.FacetDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.ProxiesDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.SchemaBindingDescriptor;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Can contain: - doctype - schemas - facets
@@ -39,6 +40,8 @@ public class TypeServiceMapper extends ExtensionMapper {
         registerDescriptor("facets", FacetDescriptor.class);
         registerDescriptor("doctypes", DocumentTypeDescriptor.class);
         registerDescriptor("schemas", SchemaBindingDescriptor.class);
+
+        registerBareDescriptor(ProxiesDescriptor.class);
     }
 
     @Override

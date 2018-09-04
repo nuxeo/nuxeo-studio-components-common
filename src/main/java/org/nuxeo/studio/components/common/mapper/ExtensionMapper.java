@@ -19,10 +19,6 @@
 
 package org.nuxeo.studio.components.common.mapper;
 
-import org.nuxeo.studio.components.common.bundle.Extension;
-import org.nuxeo.studio.components.common.mapper.xmap.Context;
-import org.nuxeo.studio.components.common.mapper.xmap.XMap;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,9 +26,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.nuxeo.studio.components.common.bundle.Extension;
+import org.nuxeo.studio.components.common.mapper.xmap.Context;
+import org.nuxeo.studio.components.common.mapper.xmap.XMap;
+
 public abstract class ExtensionMapper {
 
     protected Map<String, List<Class<?>>> descriptors = new HashMap<>();
+
+    protected List<Class<?>> bareDescriptors = new ArrayList<>();
 
     public ExtensionMapper() {
         registerDescriptors();
@@ -42,8 +44,23 @@ public abstract class ExtensionMapper {
 
     protected abstract boolean accept(String target, String point);
 
+    /**
+     * Associated a Descriptor to a Studio registry
+     * 
+     * @param name
+     * @param descriptor
+     */
     public void registerDescriptor(String name, Class<?> descriptor) {
         descriptors.computeIfAbsent(name, s -> new ArrayList<>()).add(descriptor);
+    }
+
+    /**
+     * Register descriptor that are not handled by Studio registries
+     * 
+     * @param descriptor
+     */
+    public void registerBareDescriptor(Class<?> descriptor) {
+        bareDescriptors.add(descriptor);
     }
 
     public boolean accept(Extension ext) {
@@ -81,7 +98,9 @@ public abstract class ExtensionMapper {
     }
 
     public List<Class<?>> getDescriptors() {
-        return descriptors.values().stream().collect(ArrayList::new, ArrayList::addAll, ArrayList::addAll);
+        List<Class<?>> completeList = new ArrayList<>(bareDescriptors);
+        descriptors.values().forEach(completeList::addAll);
+        return completeList;
     }
 
     public List<Class<?>> getDescriptor(String name) {

@@ -9,5 +9,9 @@
       <facet name="Versionable"/>
       <prefetch>dc:title, dc:modified, uid.uid</prefetch>
     </doctype>
+
+    <proxies>
+      <schema name="collectionMember" />
+    </proxies>
   </extension>
 </component>
