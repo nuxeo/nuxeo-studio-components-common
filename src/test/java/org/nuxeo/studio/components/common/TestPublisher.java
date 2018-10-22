@@ -56,7 +56,7 @@ public class TestPublisher extends AbstractExtractorTest {
     @Before
     public void setup() throws Exception {
         opts.output = "test-output.json";
-        opts.connectUrl = "https://nos-test-connect.nos.nuxeo.com/nuxeo/site";
+        opts.connectUrl = "https://nos-preprod-connect.nuxeocloud.com/nuxeo/site/";
         opts.buildDirectory = "target";
 
         holder = new ContributionsHolder();
