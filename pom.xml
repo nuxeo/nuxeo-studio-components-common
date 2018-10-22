@@ -50,6 +50,7 @@
     <osgi.version>4.2.0</osgi.version>
     <javassist.version>3.20.0-GA</javassist.version>
     <dom4j.version>2.1.1</dom4j.version>
+    <jaxen.version>1.1.6</jaxen.version>
     <xerces.version>2.11.0</xerces.version>
     <logging.version>1.2</logging.version>
   </properties>
@@ -65,6 +66,11 @@
       <groupId>org.dom4j</groupId>
       <artifactId>dom4j</artifactId>
       <version>${dom4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>jaxen</groupId>
+      <artifactId>jaxen</artifactId>
+      <version>${jaxen.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
