@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
-
 import org.nuxeo.studio.components.common.bundle.BundleWalker;
 import org.nuxeo.studio.components.common.bundle.ContributionsHolder;
 import org.nuxeo.studio.components.common.runtime.ExtractorContext;
@@ -51,8 +50,9 @@ public class ContributionsLoader {
     public void load() {
         if (StringUtils.isNotBlank(opts.getJarFile())) {
             // Based on external jarFile
-            List<String> files = Arrays.stream(opts.getJarFile().split(",")) //
+            List<URI> files = Arrays.stream(opts.getJarFile().split(",")) //
                                        .filter(s -> s.endsWith(".jar"))
+                                    .map(s -> new File(s).toURI())
                                        .collect(Collectors.toList());
             ExtractorContext.instance.addExternalSources(files);
 
@@ -63,13 +63,13 @@ public class ContributionsLoader {
         }
     }
 
-    protected void loadFromJarFile(String jarFile) {
-        File file = new File(jarFile);
+    protected void loadFromJarFile(URI jarFileURI) {
+        File file = new File(jarFileURI);
         if (!file.exists()) {
-            throw new RuntimeException("Unknown jar file: " + jarFile);
+            throw new RuntimeException("Unknown jar file: " + jarFileURI);
         }
 
-        URI uri = URI.create("jar:file:" + file.getAbsolutePath());
+        URI uri = URI.create("jar:" + jarFileURI);
         try (FileSystem fs = FileSystems.newFileSystem(uri, new HashMap<>())) {
             new BundleWalker(fs.getPath("/")).getRegistrationInfos().forEach(holder::load);
         } catch (IOException e) {
