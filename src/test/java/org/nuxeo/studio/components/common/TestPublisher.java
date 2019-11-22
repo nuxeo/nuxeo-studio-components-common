@@ -27,6 +27,7 @@ import static org.mockito.Mockito.spy;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -94,7 +95,13 @@ public class TestPublisher extends AbstractExtractorTest {
         Stream<Path> contributions = Stream.of("operation-contrib.xml", "doctype-contrib.xml", "doctype-nd-contrib.xml",
                 "schema-contrib.xml", "lifecycle-contrib.xml", "chains-contrib.xml")
                                            .map(c -> ExtractorContext.instance.getResource(c))
-                                           .map(c -> Paths.get(c.getPath()));
+                                           .map(c -> {
+                                               try {
+                                                   return Paths.get(c.toURI());
+                                               } catch (URISyntaxException e) {
+                                                   throw new RuntimeException(e);
+                                               }
+                                           });
 
         BundleWalker bundleWalker = spy(new BundleWalker((Path) null));
         doReturn(contributions).when(bundleWalker).getComponents();
