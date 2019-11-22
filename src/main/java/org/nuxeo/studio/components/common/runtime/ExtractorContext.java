@@ -38,10 +38,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.nuxeo.studio.components.common.mapper.xmap.Context;
 
 /**
@@ -53,6 +51,7 @@ import org.nuxeo.studio.components.common.mapper.xmap.Context;
  * </p>
  */
 public class ExtractorContext extends Context {
+
     private static final Log log = LogFactory.getLog(ExtractorContext.class);
 
     public static ExtractorContext instance = new ExtractorContext();
@@ -68,31 +67,14 @@ public class ExtractorContext extends Context {
      * Add a custom class loader based on {@code project} parameter. It loads current classes and project child's
      * classes.
      *
-     * @param additionalUrls Additional urls as string to enhance current UrlClassLoader
+     * @param files Additional urls as string to enhance current UrlClassLoader
      * @throws IOException When unable to reach an url passed as parameter
      */
-    public static void initCustomClassLoader(Collection<String> additionalUrls) throws IOException {
+    public static void initCustomClassLoader(Collection<URI> files) throws IOException {
         List<URL> urlElements = new ArrayList<>();
-
-        for (String s : additionalUrls) {
-            URI uri = URI.create(s);
-            URL url;
-            if (StringUtils.isBlank(uri.getScheme())) {
-                url = new File(s).toURI().toURL();
-            } else {
-                // Without using a FS, scheme like jar:file are not easily exportable as URL
-                try (FileSystem fs = FileSystems.newFileSystem(uri, new HashMap<>())) {
-                    url = fs.getPath("").toUri().toURL();
-                } catch (UnsupportedOperationException e) {
-                    log.info("Unable to add file" + uri + " to custom classpath.");
-                    log.debug(e, e);
-                    continue;
-                }
-            }
-
-            urlElements.add(url);
+        for (URI uri : files) {
+            urlElements.add(uri.toURL());
         }
-
         custom = new URLClassLoader(urlElements.toArray(new URL[0]), getClassloader());
     }
 
@@ -104,18 +86,18 @@ public class ExtractorContext extends Context {
         }
     }
 
-    public void addExternalSources(Collection<String> sources) {
+    public void addExternalSources(Collection<URI> files) {
         try {
-            initCustomClassLoader(sources);
+            initCustomClassLoader(files);
         } catch (IOException e) {
             log.warn(e, e);
         }
-        sources.stream().map(URI::create).forEach(extResourcesSources::add);
+        files.forEach(extResourcesSources::add);
     }
 
     public void addExternalSource(URI source) {
         try {
-            initCustomClassLoader(Collections.singleton(source.toString()));
+            initCustomClassLoader(Collections.singleton(source));
         } catch (IOException e) {
             log.warn(e, e);
         }
