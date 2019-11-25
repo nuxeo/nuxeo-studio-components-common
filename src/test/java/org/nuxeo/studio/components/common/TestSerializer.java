@@ -25,6 +25,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
@@ -36,7 +37,6 @@ import java.nio.file.FileSystems;
 import java.util.HashMap;
 import java.util.List;
 
-import org.dom4j.DocumentException;
 import org.junit.Test;
 import org.nuxeo.studio.components.common.bundle.BundleWalker;
 import org.nuxeo.studio.components.common.bundle.ContributionsHolder;
@@ -54,7 +54,6 @@ import org.nuxeo.studio.components.common.mapper.impl.TypeServiceMapper;
 import org.nuxeo.studio.components.common.runtime.ExtractorContext;
 import org.nuxeo.studio.components.common.serializer.StudioSerializer;
 import org.nuxeo.studio.components.common.serializer.adapter.schema.SimpleSchemaReader;
-import org.xml.sax.SAXException;
 
 import net.sf.json.test.JSONAssert;
 
@@ -188,19 +187,20 @@ public class TestSerializer extends AbstractExtractorTest {
         JSONAssert.assertJsonEquals(expected, result);
     }
 
-    protected URI getJarURI() {
+    protected URI getJarFile() {
         URL resource = getClass().getClassLoader().getResource("test-project-core-1.0-SNAPSHOT.jar");
         assertNotNull(resource);
-        return URI.create("jar:file:" + resource.getFile());
+        return new File(resource.getFile()).toURI();
     }
 
     @Test
     public void jarFileSerialization() throws IOException {
-        URI uri = getJarURI();
-        ExtractorContext.instance.addExternalSource(uri);
+        URI jarFile = getJarFile();
+        ExtractorContext.instance.addExternalSource(jarFile);
 
         ContributionsHolder holder = new ContributionsHolder();
 
+        URI uri = URI.create("jar:" + jarFile);
         try (FileSystem jfs = FileSystems.newFileSystem(uri, new HashMap<>())) {
             BundleWalker walker = new BundleWalker(jfs.getPath("/"));
             walker.getRegistrationInfos().forEach(holder::load);
@@ -215,8 +215,10 @@ public class TestSerializer extends AbstractExtractorTest {
     }
 
     @Test
-    public void loadSchemaForDependency() throws IOException, SAXException, DocumentException {
-        URI uri = getJarURI();
+    public void loadSchemaForDependency() {
+        URI jarFile = getJarFile();
+        URI uri = URI.create("jar:" + jarFile);
+
         URL file = ExtractorContext.instance.getResourceFromFile(uri, "foobar");
         assertNull(file);
 
