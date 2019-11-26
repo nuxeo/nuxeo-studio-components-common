@@ -3,7 +3,7 @@
 
   <groupId>org.nuxeo.studio</groupId>
   <artifactId>nuxeo-studio-components-common</artifactId>
-  <version>0.1.3-SNAPSHOT</version>
+  <version>0.1.4-SNAPSHOT</version>
   <name>Nuxeo studio components common parent</name>
   <url>http://www.nuxeo.com</url>
   <organization>
