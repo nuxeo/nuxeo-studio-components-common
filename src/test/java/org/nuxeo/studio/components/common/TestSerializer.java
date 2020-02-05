@@ -107,7 +107,7 @@ public class TestSerializer extends AbstractExtractorTest {
 
     @Test
     public void testSchemaSerializer() throws URISyntaxException {
-        assertSerialization("schema-contrib.xml", SchemaBindingDescriptor.class, 1, EXPECTED_JSON_SCHEMA);
+        assertSerialization("schema-contrib.xml", SchemaBindingDescriptor.class, 2, EXPECTED_JSON_SCHEMA);
     }
 
     @Test

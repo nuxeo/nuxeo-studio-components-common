@@ -19,10 +19,10 @@
 
 package org.nuxeo.studio.components.common.mapper.descriptors;
 
+import java.io.File;
+
 import org.nuxeo.studio.components.common.mapper.xmap.annotation.XNode;
 import org.nuxeo.studio.components.common.mapper.xmap.annotation.XObject;
-
-import java.io.File;
 
 @XObject("schema")
 public class SchemaBindingDescriptor {
@@ -43,6 +43,9 @@ public class SchemaBindingDescriptor {
 
     @XNode("@isVersionWritable")
     public boolean isVersionWritable = false;
+
+    @XNode("@enabled")
+    public boolean isEnabled = true;
 
     @Override
     public String toString() {

@@ -27,6 +27,9 @@ public class SchemaAdapter implements SerializerAdapter<SchemaBindingDescriptor,
 
     @Override
     public Schema adapt(SchemaBindingDescriptor descriptor) {
+        if (!descriptor.isEnabled) {
+            return null;
+        }
         Schema schema = new Schema(descriptor.name, descriptor.prefix);
         SimpleSchemaReader reader = new SimpleSchemaReader(descriptor.src);
         reader.load();
