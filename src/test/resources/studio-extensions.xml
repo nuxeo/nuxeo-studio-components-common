@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<component name="studio.extensions.test-project" version="1.0.0">
+  <require>org.nuxeo.runtime.started</require>
+  <extension target="org.nuxeo.ecm.core.schema.TypeService" point="schema">
+    <schema name="aaa" prefix="aaa" override="true" src="data/schemas/aaa.xsd"/>
+    <schema name="ddd" prefix="ddd" override="true" src="data/schemas/ddd.xsd"/>
+    <schema name="qq" prefix="qq" override="true" src="data/schemas/qq.xsd"/>
+    <schema name="var_qq-20201229154751583-start-node" prefix="var_qq-20201229154751583-start-node" override="true" src="data/schemas/var_qq-20201229154751583-start-node.xsd"/>
+    <schema name="var_qq-20201229154751584-stop-node" prefix="var_qq-20201229154751584-stop-node" override="true" src="data/schemas/var_qq-20201229154751584-stop-node.xsd"/>
+    <schema name="var_qq" prefix="var_qq" override="true" src="data/schemas/var_qq.xsd"/>
+    <schema name="var_test-NXS-6192-20201207115743790-start-node" prefix="var_test-NXS-6192-20201207115743790-start-node" override="true" src="data/schemas/var_test-NXS-6192-20201207115743790-start-node.xsd"/>
+    <schema name="var_test-NXS-6192-20201207115743790-stop-node" prefix="var_test-NXS-6192-20201207115743790-stop-node" override="true" src="data/schemas/var_test-NXS-6192-20201207115743790-stop-node.xsd"/>
+    <schema name="var_test-NXS-6192-20201207115807953-approve-task" prefix="var_test-NXS-6192-20201207115807953-approve-task" override="true" src="data/schemas/var_test-NXS-6192-20201207115807953-approve-task.xsd"/>
+    <schema name="var_test-NXS-6192" prefix="var_test-NXS-6192" override="true" src="data/schemas/var_test-NXS-6192.xsd"/>
+    <schema name="var_ww-20201217152656962-start-node" prefix="var_ww-20201217152656962-start-node" override="true" src="data/schemas/var_ww-20201217152656962-start-node.xsd"/>
+    <schema name="var_ww-20201217152656963-stop-node" prefix="var_ww-20201217152656963-stop-node" override="true" src="data/schemas/var_ww-20201217152656963-stop-node.xsd"/>
+    <schema name="var_ww" prefix="var_ww" override="true" src="data/schemas/var_ww.xsd"/>
+  </extension>
+  <extension target="org.nuxeo.ecm.core.schema.TypeService" point="doctype">
+    <doctype name="aaa" extends="Document">
+      <schema name="aaa"/>
+      <schema name="dublincore"/>
+      <schema name="common"/>
+      <schema name="uid"/>
+    </doctype>
+    <doctype name="Folder" append="true">
+      <subtypes>
+        <type>aaa</type>
+      </subtypes>
+    </doctype>
+    <doctype name="Workspace" append="true">
+      <subtypes>
+        <type>aaa</type>
+      </subtypes>
+    </doctype>
+    <doctype name="ddd" extends="Document">
+      <schema name="ddd"/>
+      <schema name="dublincore"/>
+      <schema name="common"/>
+      <schema name="uid"/>
+    </doctype>
+    <doctype name="Folder" append="true">
+      <subtypes>
+        <type>ddd</type>
+      </subtypes>
+    </doctype>
+    <doctype name="Workspace" append="true">
+      <subtypes>
+        <type>ddd</type>
+      </subtypes>
+    </doctype>
+    <facet name="facet-var_qq-20201229154751583-start-node">
+      <schema name="var_qq-20201229154751583-start-node"/>
+    </facet>
+    <facet name="facet-var_qq-20201229154751584-stop-node">
+      <schema name="var_qq-20201229154751584-stop-node"/>
+    </facet>
+    <facet name="facet-var_qq">
+      <schema name="var_qq"/>
+    </facet>
+    <facet name="facet-var_test-NXS-6192-20201207115743790-start-node">
+      <schema name="var_test-NXS-6192-20201207115743790-start-node"/>
+    </facet>
+    <facet name="facet-var_test-NXS-6192-20201207115743790-stop-node">
+      <schema name="var_test-NXS-6192-20201207115743790-stop-node"/>
+    </facet>
+    <facet name="facet-var_test-NXS-6192-20201207115807953-approve-task">
+      <schema name="var_test-NXS-6192-20201207115807953-approve-task"/>
+    </facet>
+    <facet name="facet-var_test-NXS-6192">
+      <schema name="var_test-NXS-6192"/>
+    </facet>
+    <facet name="facet-var_ww-20201217152656962-start-node">
+      <schema name="var_ww-20201217152656962-start-node"/>
+    </facet>
+    <facet name="facet-var_ww-20201217152656963-stop-node">
+      <schema name="var_ww-20201217152656963-stop-node"/>
+    </facet>
+    <facet name="facet-var_ww">
+      <schema name="var_ww"/>
+    </facet>
+  </extension>
+  <extension target="org.nuxeo.ecm.core.lifecycle.LifeCycleService" point="types">
+    <types>
+      <type name="aaa">default</type>
+    </types>
+    <types>
+      <type name="ddd">default</type>
+    </types>
+  </extension>
+  <extension target="org.nuxeo.ecm.platform.types.TypeService" point="types">
+    <type id="aaa">
+      <label>aaa</label>
+      <description></description>
+    </type>
+    <type id="ddd">
+      <label>ddd</label>
+      <description></description>
+    </type>
+  </extension>
+  <extension target="org.nuxeo.ecm.platform.ui.web.auth.service.PluggableAuthenticationService" point="loginScreen">
+    <loginScreenConfig>
+      <bodyBackgroundStyle>url("${org.nuxeo.ecm.contextPath}/img/login_bg.jpg") no-repeat center center fixed #333</bodyBackgroundStyle>
+      <disableBackgroundSizeCover>true</disableBackgroundSizeCover>
+      <removeNews>false</removeNews>
+      <footerStyle></footerStyle>
+      <loginBoxBackgroundStyle>url("${org.nuxeo.ecm.contextPath}/img/2-wh%2Bteal.png") left top/contain no-repeat #c97fee</loginBoxBackgroundStyle>
+      <loginBoxWidth>500px</loginBoxWidth>
+      <loginButtonBackgroundColor>#0066ff</loginButtonBackgroundColor>
+      <logoUrl>${org.nuxeo.ecm.contextPath}/img/2-wh%2Bteal.png</logoUrl>
+    </loginScreenConfig>
+  </extension>
+  <extension target="org.nuxeo.ecm.core.operation.OperationServiceComponent" point="event-handlers">
+    <handler chainId="aa">
+      <event>pictureViewsGenerationDone</event>
+      <filters>
+        <attribute>Regular Document</attribute>
+      </filters>
+    </handler>
+  </extension>
+  <extension target="org.nuxeo.ecm.core.lifecycle.LifeCycleService" point="lifecycle">
+    <lifecycle name="ss" defaultInitial="Initial State">
+      <transitions/>
+      <states>
+        <state name="Initial State" description="" initial="true">
+          <transitions/>
+        </state>
+      </states>
+    </lifecycle>
+  </extension>
+  <extension target="org.nuxeo.ecm.core.operation.OperationServiceComponent" point="chains">
+    <chain id="aa">
+      <operation id="Context.FetchDocument"/>
+    </chain>
+  </extension>
+  <extension point="permissions" target="org.nuxeo.ecm.core.security.SecurityService">
+    <permission name="ff"/>
+  </extension>
+  <extension point="permissionsVisibility" target="org.nuxeo.ecm.core.security.SecurityService"/>
+  <extension target="org.nuxeo.automation.scripting.internals.AutomationScriptingComponent" point="operation">
+    <scriptedOperation id="javascript.dzdz">
+      <inputType>void</inputType>
+      <outputType>void</outputType>
+      <category>javascript</category>
+      <description></description>
+      <script><![CDATA[function run(input, params) {
+
+}]]></script>
+      <param type="string" name="fefefgrrrrrrr"/>
+    </scriptedOperation>
+    <scriptedOperation id="javascript.efe">
+      <inputType>void</inputType>
+      <outputType>document</outputType>
+      <category>javascript</category>
+      <description>fefeeffazazaz</description>
+      <script><![CDATA[function run(input, params) {
+
+}]]></script>
+    </scriptedOperation>
+    <scriptedOperation id="javascript.rgrgr">
+      <inputType>document</inputType>
+      <outputType>document</outputType>
+      <category>javascript</category>
+      <description></description>
+      <script><![CDATA[function run(input, params) {
+
+}]]></script>
+    </scriptedOperation>
+    <scriptedOperation id="javascript.tyty">
+      <inputType>void</inputType>
+      <outputType>void</outputType>
+      <category>javascript</category>
+      <description></description>
+      <script><![CDATA[function run(input, params) {
+
+}]]></script>
+    </scriptedOperation>
+  </extension>
+  <extension target="org.nuxeo.ecm.platform.content.template.service.ContentTemplateService" point="factoryBinding">
+    <factoryBinding name="DomainFactory" factoryName="SimpleTemplateFactory" targetType="Domain">
+      <template>
+        <templateItem typeName="WorkspaceRoot" id="workspaces" title="Workspaces" description="Workspace Root"/>
+        <templateItem typeName="SectionRoot" id="sections" title="Sections" description="Sections Root"/>
+        <templateItem typeName="TemplateRoot" id="templates" title="Templates" description="Workspace Templates Root"/>
+      </template>
+    </factoryBinding>
+    <factoryBinding name="RootFactory" factoryName="SimpleTemplateRootFactory" targetType="Root">
+      <acl>
+        <ace principal="Administrator" permission="Everything" granted="true"/>
+        <ace principal="administrators" permission="Everything" granted="true"/>
+        <ace principal="members" permission="Read" granted="true"/>
+        <ace principal="members" permission="Version" granted="true"/>
+      </acl>
+      <template>
+        <templateItem typeName="Domain" id="default-domain" title="Default Domain" description="Nuxeo Default Domain"/>
+      </template>
+    </factoryBinding>
+  </extension>
+  <extension target="org.nuxeo.ecm.directory.GenericDirectory" point="directories">
+    <directory name="userDirectory" extends="template-user">
+      <passwordField>password</passwordField>
+      <dataFile>data/users.csv</dataFile>
+      <idField>username</idField>
+      <schema>user</schema>
+      <passwordHashAlgorithm>SSHA</passwordHashAlgorithm>
+      <autoincrementIdField>false</autoincrementIdField>
+      <querySizeLimit>50</querySizeLimit>
+      <types>
+        <type>system</type>
+      </types>
+      <cacheEntryName>user-entry-cache</cacheEntryName>
+      <cacheEntryWithoutReferencesName>user-entry-cache-without-references</cacheEntryWithoutReferencesName>
+      <references>
+        <inverseReference field="groups" directory="groupDirectory" dualReferenceField="members"/>
+      </references>
+      <createTablePolicy>on_missing_columns</createTablePolicy>
+      <dataLoadingPolicy>skip_duplicate</dataLoadingPolicy>
+    </directory>
+    <directory name="groupDirectory" extends="template-group">
+      <dataFile>data/groups.csv</dataFile>
+      <idField>groupname</idField>
+      <schema>group</schema>
+      <autoincrementIdField>false</autoincrementIdField>
+      <querySizeLimit>50</querySizeLimit>
+      <types>
+        <type>system</type>
+      </types>
+      <cacheEntryName>group-entry-cache</cacheEntryName>
+      <cacheEntryWithoutReferencesName>group-entry-cache-without-references</cacheEntryWithoutReferencesName>
+      <references>
+        <reference field="members" directory="userDirectory" name="user2group" source="groupId" target="userId" dataFile="data/user2group.csv"/>
+        <reference field="subGroups" directory="groupDirectory" name="group2group" source="parentGroupId" target="childGroupId"/>
+        <inverseReference field="parentGroups" directory="groupDirectory" dualReferenceField="subGroups"/>
+      </references>
+      <createTablePolicy>on_missing_columns</createTablePolicy>
+      <dataLoadingPolicy>skip_duplicate</dataLoadingPolicy>
+    </directory>
+  </extension>
+  <extension target="org.nuxeo.ecm.platform.routing.service" point="routeModelImporter">
+    <template-resource id="qq" path="data/qq.zip"/>
+    <template-resource id="test-NXS-6192" path="data/test-NXS-6192.zip"/>
+    <template-resource id="ww" path="data/ww.zip"/>
+  </extension>
+  <extension target="org.nuxeo.ecm.platform.actions.ActionService" point="filters">
+    <filter id="create" append="true">
+      <rule grant="false">
+        <type>aaa</type>
+        <type>ddd</type>
+      </rule>
+    </filter>
+  </extension>
+  <extension target="org.nuxeo.ecm.platform.WebResources" point="resources">
+    <resource name="nuxeo-test-project-bundle.html" type="import" shrinkable="false">
+      <uri>/ui/nuxeo-test-project-bundle.html</uri>
+    </resource>
+  </extension>
+  <extension target="org.nuxeo.ecm.platform.WebResources" point="bundles">
+    <bundle name="web-ui">
+      <resources append="true">
+        <resource>nuxeo-test-project-bundle.html</resource>
+      </resources>
+    </bundle>
+  </extension>
+</component>

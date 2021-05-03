@@ -69,7 +69,7 @@ public class TestSerializer extends AbstractExtractorTest {
 
     public static final String EXPECTED_JSON_EVENT = "{\"MyFirstEvent\": \"My First Event\", \"MySecondEvent\": \"My Second Event\"}";
 
-    public static final String EXPECTED_JSON_SCHEMA = "{\"dublincore\":{\"@prefix\":\"dc\",\"description\":\"string\",\"created\":\"date\",\"coverage\":\"string\",\"title\":\"string\",\"complex\":{\"fields\":{\"mime-type\":\"string\",\"data\":\"binary\",\"name\":\"string\",\"length\":\"long\",\"digest\":\"string\",\"encoding\":\"string\"},\"type\":\"complex\"},\"modified\":\"date\",\"nature\":\"string\",\"lastContributor\":\"string\",\"content\":\"blob\",\"source\":\"string\",\"publisher\":\"string\"}}";
+    public static final String EXPECTED_JSON_SCHEMA = "{\"dublincore\":{\"@prefix\":\"dc\",\"description\":\"string\",\"created\":\"date\",\"coverage\":\"string\",\"title\":\"string\",\"complex\":{\"fields\":{\"mime-type\":\"string\",\"data\":\"binary\",\"name\":\"string\",\"length\":\"long\",\"digest\":\"string\",\"encoding\":\"string\"},\"type\":\"complex\"},\"modified\":\"date\",\"nature\":\"string\",\"lastContributor\":\"string\",\"content\":\"blob\",\"source\":\"string\",\"publisher\":\"string\"},\"simpletype\":{\"@prefix\":\"st\",\"title\":\"string\",\"description\":\"string\",\"coverage\":\"string\"}}";
 
     public static final String EXPECTED_JSON_DOCTYPE = "{\"File\": {\"parent\":\"Document\",\"schemas\":[\"common\",\"file\",\"dublincore\",\"uid\"],\"facets\":[\"Downloadable\",\"Versionable\"]}}";
 
@@ -107,7 +107,7 @@ public class TestSerializer extends AbstractExtractorTest {
 
     @Test
     public void testSchemaSerializer() throws URISyntaxException {
-        assertSerialization("schema-contrib.xml", SchemaBindingDescriptor.class, 2, EXPECTED_JSON_SCHEMA);
+        assertSerialization("schema-contrib.xml", SchemaBindingDescriptor.class, 3, EXPECTED_JSON_SCHEMA);
     }
 
     @Test

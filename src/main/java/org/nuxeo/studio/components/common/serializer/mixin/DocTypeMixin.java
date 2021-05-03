@@ -19,22 +19,26 @@
 
 package org.nuxeo.studio.components.common.serializer.mixin;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.apache.commons.lang3.StringUtils;
-import org.nuxeo.studio.components.common.mapper.descriptors.DocumentTypeDescriptor;
-import org.nuxeo.studio.components.common.serializer.JacksonConverter;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
+import org.nuxeo.studio.components.common.mapper.descriptors.DocumentTypeDescriptor;
+import org.nuxeo.studio.components.common.serializer.JacksonConverter;
+
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 @JsonSerialize(using = DocTypeMixin.DocTypeSerializer.class)
 public abstract class DocTypeMixin {
     public static class DocTypeSerializer extends JacksonConverter.StudioJacksonSerializer<DocumentTypeDescriptor> {
+
+        private static final long serialVersionUID = 1L;
+
         @Override
         public void serialize(DocumentTypeDescriptor value, JsonGenerator gen, SerializerProvider provider)
                 throws IOException {
@@ -45,9 +49,7 @@ public abstract class DocTypeMixin {
             obj.put("schemas", Arrays.stream(value.schemas).map(s -> s.name).collect(Collectors.toList()));
             obj.put("facets", value.facets);
 
-            gen.writeFieldName(value.name);
-            gen.writeRawValue(":");
-            gen.writeObject(obj);
+            gen.writeObjectField(value.name, obj);
         }
     }
 }
