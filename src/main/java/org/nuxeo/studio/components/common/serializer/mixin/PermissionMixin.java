@@ -19,26 +19,28 @@
 
 package org.nuxeo.studio.components.common.serializer.mixin;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.nuxeo.studio.components.common.mapper.descriptors.PermissionDescriptor;
-import org.nuxeo.studio.components.common.serializer.JacksonConverter.StudioJacksonSerializer;
+import static org.nuxeo.studio.components.common.serializer.SerializerHelper.humanize;
 
 import java.io.IOException;
 
-import static org.nuxeo.studio.components.common.serializer.SerializerHelper.humanize;
+import org.nuxeo.studio.components.common.mapper.descriptors.PermissionDescriptor;
+import org.nuxeo.studio.components.common.serializer.JacksonConverter.StudioJacksonSerializer;
+
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize(using = PermissionMixin.PermissionSerializer.class)
 public abstract class PermissionMixin {
 
     public static class PermissionSerializer extends StudioJacksonSerializer<PermissionDescriptor> {
+
+        private static final long serialVersionUID = 1L;
+
         @Override
         public void serialize(PermissionDescriptor value, JsonGenerator gen, SerializerProvider provider)
                 throws IOException {
-            gen.writeFieldName(value.getName());
-            gen.writeRawValue(":");
-            gen.writeObject(humanize(value.getName()));
+            gen.writeObjectField(value.getName(), humanize(value.getName()));
         }
     }
 }

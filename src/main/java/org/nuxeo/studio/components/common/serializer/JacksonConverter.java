@@ -19,12 +19,14 @@
 
 package org.nuxeo.studio.components.common.serializer;
 
-import com.fasterxml.jackson.core.JsonEncoding;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.StringWriter;
+import java.lang.reflect.ParameterizedType;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -50,12 +52,11 @@ import org.nuxeo.studio.components.common.serializer.mixin.OperationDocumentatio
 import org.nuxeo.studio.components.common.serializer.mixin.PermissionMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.SchemaMixin;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.lang.reflect.ParameterizedType;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import com.fasterxml.jackson.core.JsonEncoding;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 public class JacksonConverter {
 
@@ -109,14 +110,12 @@ public class JacksonConverter {
         }
     }
 
-    public String serialize(Object target) {
+    public String serialize(Object target, boolean simulateWrapInObject) {
         try {
             ObjectMapper om = new ObjectMapper();
             Object targetAdapted = adapters.getOrDefault(target.getClass(), defaultAdapter).adapt(target);
 
-            // Mainly occurred with {@code SchemaAdapter#adapt} when schema file
-            // is
-            // missing.
+            // Mainly occurred with {@code SchemaAdapter#adapt} when schema file is missing.
             if (targetAdapted == null) {
                 log.warn("Unable to adapt: \"" + target + "\" (" + target.getClass() + ")");
                 return null;
@@ -124,8 +123,18 @@ public class JacksonConverter {
 
             log.info("Serialize: " + targetAdapted.toString().trim());
             om.addMixIn(targetAdapted.getClass(), mixins.getOrDefault(targetAdapted.getClass(), Object.class));
-            return om.writeValueAsString(targetAdapted);
-        } catch (JsonProcessingException e) {
+            StringWriter sw = new StringWriter();
+            JsonGenerator gen = om.getFactory().createGenerator(sw);
+            if (simulateWrapInObject) {
+                gen.writeStartObject();
+            }
+            om.writeValue(gen, targetAdapted);
+            String result = sw.toString();
+            if (simulateWrapInObject) {
+                result = StringUtils.removeStart(result, "{");
+            }
+            return result;
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

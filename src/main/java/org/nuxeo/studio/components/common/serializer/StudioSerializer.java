@@ -19,9 +19,6 @@
 
 package org.nuxeo.studio.components.common.serializer;
 
-import org.nuxeo.studio.components.common.ExtractorOptions;
-import org.nuxeo.studio.components.common.bundle.ContributionsHolder;
-
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +28,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import org.nuxeo.studio.components.common.ExtractorOptions;
+import org.nuxeo.studio.components.common.bundle.ContributionsHolder;
 
 public class StudioSerializer {
 
@@ -74,14 +74,14 @@ public class StudioSerializer {
             return null;
         }
 
-        return contribs.stream() //
-                       .map(this::serialize) //
-                       .filter(Objects::nonNull) //
+        return contribs.stream()
+                       .map(contrib -> this.serialize(contrib, name))
+                       .filter(Objects::nonNull)
                        .collect(Collectors.joining(delimiter, prefix, suffix));
     }
 
-    protected String serialize(Object obj) {
-        return JacksonConverter.instance(options).serialize(obj);
+    protected String serialize(Object obj, String name) {
+        return JacksonConverter.instance(options).serialize(obj, !asArray.contains(name));
     }
 
     public String getDelimiter() {

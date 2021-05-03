@@ -25,15 +25,18 @@ import static org.nuxeo.studio.components.common.serializer.SerializerHelper.hum
 import java.io.IOException;
 import java.util.stream.Collectors;
 
+import org.nuxeo.studio.components.common.mapper.descriptors.EventListenerDescriptor;
+import org.nuxeo.studio.components.common.serializer.JacksonConverter;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.nuxeo.studio.components.common.mapper.descriptors.EventListenerDescriptor;
-import org.nuxeo.studio.components.common.serializer.JacksonConverter;
 
 @JsonSerialize(using = EventListenerMixin.EventSerializer.class)
 public abstract class EventListenerMixin {
     public static class EventSerializer extends JacksonConverter.StudioJacksonSerializer<EventListenerDescriptor> {
+
+        private static final long serialVersionUID = 1L;
 
         @Override
         public void serialize(EventListenerDescriptor value, JsonGenerator gen, SerializerProvider provider)

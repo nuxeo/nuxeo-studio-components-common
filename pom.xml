@@ -39,7 +39,7 @@
     <debugITs>false</debugITs>
     <skipITs>false</skipITs>
     <nuxeo.version>9.2</nuxeo.version>
-    <jackson.version>2.7.4</jackson.version>
+    <jackson.version>2.9.10</jackson.version>
     <apache.lang3.version>3.3.2</apache.lang3.version>
     <surefire.version>2.19.1</surefire.version>
     <mockito.version>1.9.5</mockito.version>

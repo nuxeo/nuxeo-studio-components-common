@@ -19,9 +19,8 @@
 
 package org.nuxeo.studio.components.common.serializer.mixin;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.io.IOException;
+
 import org.apache.commons.lang3.StringUtils;
 import org.nuxeo.studio.components.common.serializer.JacksonConverter.StudioJacksonSerializer;
 import org.nuxeo.studio.components.common.serializer.adapter.schema.ComplexField;
@@ -29,17 +28,21 @@ import org.nuxeo.studio.components.common.serializer.adapter.schema.Field;
 import org.nuxeo.studio.components.common.serializer.adapter.schema.Schema;
 import org.nuxeo.studio.components.common.serializer.adapter.schema.SimpleField;
 
-import java.io.IOException;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize(using = SchemaMixin.SchemaSerializer.class)
 public abstract class SchemaMixin {
 
     public static class SchemaSerializer extends StudioJacksonSerializer<Schema> {
+
+        private static final long serialVersionUID = 1L;
+
         @Override
         public void serialize(Schema value, JsonGenerator gen, SerializerProvider provider) throws IOException {
 
             gen.writeFieldName(value.getName());
-            gen.writeRaw(":");
             gen.writeStartObject();
 
             // Add prefix

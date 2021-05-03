@@ -19,30 +19,32 @@
 
 package org.nuxeo.studio.components.common.serializer.mixin;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.nuxeo.studio.components.common.mapper.descriptors.LifeCycleDescriptor;
-import org.nuxeo.studio.components.common.serializer.JacksonConverter.StudioJacksonSerializer;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.nuxeo.studio.components.common.mapper.descriptors.LifeCycleDescriptor;
+import org.nuxeo.studio.components.common.serializer.JacksonConverter.StudioJacksonSerializer;
+
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 @JsonSerialize(using = LifeCycleMixin.LifeCycleSerializer.class)
 public abstract class LifeCycleMixin {
     public static class LifeCycleSerializer extends StudioJacksonSerializer<LifeCycleDescriptor> {
+
+        private static final long serialVersionUID = 1L;
+
         @Override
         public void serialize(LifeCycleDescriptor value, JsonGenerator gen, SerializerProvider provider)
                 throws IOException {
-            Map<String, List> lifecycle = new HashMap<>();
+            Map<String, List<?>> lifecycle = new HashMap<>();
             lifecycle.put("states", value.getStates());
             lifecycle.put("transitions", value.getTransitions());
 
-            gen.writeFieldName(value.getName());
-            gen.writeRawValue(":");
-            gen.writeObject(lifecycle);
+            gen.writeObjectField(value.getName(), lifecycle);
         }
     }
 }
