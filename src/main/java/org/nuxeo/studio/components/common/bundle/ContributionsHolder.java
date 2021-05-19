@@ -19,19 +19,20 @@
 
 package org.nuxeo.studio.components.common.bundle;
 
-import org.nuxeo.studio.components.common.mapper.MappersManager;
-import org.nuxeo.studio.components.common.mapper.impl.AutomationMapper;
-import org.nuxeo.studio.components.common.mapper.impl.EventMapper;
-import org.nuxeo.studio.components.common.mapper.impl.LifeCycleMapper;
-import org.nuxeo.studio.components.common.mapper.impl.PermissionsMapper;
-import org.nuxeo.studio.components.common.mapper.impl.TypeServiceMapper;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.nuxeo.studio.components.common.mapper.MappersManager;
+import org.nuxeo.studio.components.common.mapper.impl.AutomationMapper;
+import org.nuxeo.studio.components.common.mapper.impl.EventMapper;
+import org.nuxeo.studio.components.common.mapper.impl.LifeCycleMapper;
+import org.nuxeo.studio.components.common.mapper.impl.PermissionsMapper;
+import org.nuxeo.studio.components.common.mapper.impl.TypeServiceMapper;
+import org.nuxeo.studio.components.common.mapper.impl.VocabularyMapper;
 
 /**
  * Contributions Holder is aim to map and track all visited contributions.
@@ -53,7 +54,8 @@ public class ContributionsHolder {
                            .add(new PermissionsMapper())
                            .add(new AutomationMapper())
                            .add(new LifeCycleMapper())
-                           .add(new EventMapper()));
+                           .add(new EventMapper())
+                           .add(new VocabularyMapper()));
     }
 
     public ContributionsHolder(MappersManager manager) {
