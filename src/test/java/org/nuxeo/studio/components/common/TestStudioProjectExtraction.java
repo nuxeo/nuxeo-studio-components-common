@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.nuxeo.studio.components.common.bundle.ContributionsHolder;
 import org.nuxeo.studio.components.common.mapper.descriptors.SchemaBindingDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.WorkflowDescriptor;
 
 public class TestStudioProjectExtraction extends AbstractExtractorTest {
     public static final String STUDIO_EXTENSTIONS_FILE = "studio-extensions.xml";
@@ -23,7 +24,10 @@ public class TestStudioProjectExtraction extends AbstractExtractorTest {
     @Test
     public void testLoad() throws URISyntaxException {
         ContributionsHolder holder = loadComponent(STUDIO_EXTENSTIONS_FILE);
-        List<SchemaBindingDescriptor> contributions = holder.getContributions(SchemaBindingDescriptor.class);
-        assertThat(contributions).hasSize(13);
+        List<SchemaBindingDescriptor> schemaContribs = holder.getContributions(SchemaBindingDescriptor.class);
+        assertThat(schemaContribs).hasSize(13);
+
+        List<WorkflowDescriptor> workflowContribs = holder.getContributions(WorkflowDescriptor.class);
+        assertThat(workflowContribs).hasSize(3);
     }
 }
