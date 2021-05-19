@@ -33,6 +33,7 @@ import org.nuxeo.studio.components.common.mapper.impl.LifeCycleMapper;
 import org.nuxeo.studio.components.common.mapper.impl.PermissionsMapper;
 import org.nuxeo.studio.components.common.mapper.impl.TypeServiceMapper;
 import org.nuxeo.studio.components.common.mapper.impl.VocabularyMapper;
+import org.nuxeo.studio.components.common.mapper.impl.WorkflowMapper;
 
 /**
  * Contributions Holder is aim to map and track all visited contributions.
@@ -55,7 +56,8 @@ public class ContributionsHolder {
                            .add(new AutomationMapper())
                            .add(new LifeCycleMapper())
                            .add(new EventMapper())
-                           .add(new VocabularyMapper()));
+                           .add(new VocabularyMapper())
+                           .add(new WorkflowMapper()));
     }
 
     public ContributionsHolder(MappersManager manager) {
