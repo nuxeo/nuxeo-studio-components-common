@@ -42,6 +42,7 @@ import org.nuxeo.studio.components.common.serializer.adapter.OperationChainAdapt
 import org.nuxeo.studio.components.common.serializer.adapter.OperationScriptingAdapter;
 import org.nuxeo.studio.components.common.serializer.adapter.SchemaAdapter;
 import org.nuxeo.studio.components.common.serializer.adapter.SerializerAdapter;
+import org.nuxeo.studio.components.common.serializer.adapter.VocabularyAdapter;
 import org.nuxeo.studio.components.common.serializer.adapter.automation.OperationDocumentation;
 import org.nuxeo.studio.components.common.serializer.adapter.schema.Schema;
 import org.nuxeo.studio.components.common.serializer.mixin.DocTypeMixin;
@@ -78,6 +79,7 @@ public class JacksonConverter {
         registerAdapter(SchemaAdapter.class);
         registerAdapter(OperationChainAdapter.class);
         registerAdapter(OperationScriptingAdapter.class);
+        registerAdapter(VocabularyAdapter.class);
 
         // Mixins allow to define the way the serialization is done
         registerMixin(FacetDescriptor.class, FacetMixin.class);

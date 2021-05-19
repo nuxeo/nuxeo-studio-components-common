@@ -50,6 +50,7 @@ import org.nuxeo.studio.components.common.mapper.descriptors.OperationDescriptor
 import org.nuxeo.studio.components.common.mapper.descriptors.OperationScriptingDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.PermissionDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.SchemaBindingDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.VocabularyDescriptor;
 import org.nuxeo.studio.components.common.mapper.impl.TypeServiceMapper;
 import org.nuxeo.studio.components.common.runtime.ExtractorContext;
 import org.nuxeo.studio.components.common.serializer.StudioSerializer;
@@ -76,6 +77,8 @@ public class TestSerializer extends AbstractExtractorTest {
     public static final String EXPECTED_JSON_CHAIN = "[{\"id\":\"HelloWorldOperationChain\",\"aliases\":[],\"signature\":[\"documents\",\"documents\",\"documents\",\"document\",\"documents\",\"blob\",\"documents\",\"bloblist\",\"documents\",\"void\",\"document\",\"documents\",\"document\",\"document\",\"document\",\"blob\",\"document\",\"bloblist\",\"document\",\"void\",\"blob\",\"documents\",\"blob\",\"document\",\"blob\",\"blob\",\"blob\",\"bloblist\",\"blob\",\"void\",\"bloblist\",\"documents\",\"bloblist\",\"document\",\"bloblist\",\"blob\",\"bloblist\",\"bloblist\",\"bloblist\",\"void\",\"void\",\"documents\",\"void\",\"document\",\"void\",\"blob\",\"void\",\"bloblist\",\"void\",\"void\"],\"category\":\"Chain\",\"label\":\"HelloWorldOperationChain\",\"requires\":null,\"since\":\"\",\"description\":null,\"params\":[]},{\"id\":\"dummyMail\",\"aliases\":[],\"signature\":[\"documents\",\"documents\",\"documents\",\"document\",\"documents\",\"blob\",\"documents\",\"bloblist\",\"documents\",\"void\",\"document\",\"documents\",\"document\",\"document\",\"document\",\"blob\",\"document\",\"bloblist\",\"document\",\"void\",\"blob\",\"documents\",\"blob\",\"document\",\"blob\",\"blob\",\"blob\",\"bloblist\",\"blob\",\"void\",\"bloblist\",\"documents\",\"bloblist\",\"document\",\"bloblist\",\"blob\",\"bloblist\",\"bloblist\",\"bloblist\",\"void\",\"void\",\"documents\",\"void\",\"document\",\"void\",\"blob\",\"void\",\"bloblist\",\"void\",\"void\"],\"category\":\"Chain\",\"label\":\"dummyMail\",\"requires\":null,\"since\":\"\",\"description\":null,\"params\":[]}]";
 
     public static final String EXPECTED_JSON_SCRIPTING = "[{\"id\":\"Scripting.HelloWorld\",\"aliases\":[],\"signature\":[\"string\",\"string\"],\"category\":null,\"label\":\"Scripting.HelloWorld\",\"requires\":null,\"since\":null,\"description\":null,\"params\":[{\"name\":\"lang\",\"description\":null,\"type\":\"string\",\"widget\":null,\"values\":[],\"order\":0,\"required\":false}]}]";
+
+    public static final String EXPECTED_JSON_VOCABULARY = "[{\"parent\":null,\"id\":\"gg\",\"hierarchical\":false},{\"parent\":\"hh\",\"id\":\"hh\",\"hierarchical\":true},{\"parent\":\"hh\",\"id\":\"xx\",\"hierarchical\":false},{\"parent\":\"gg\",\"id\":\"yy\",\"hierarchical\":false}]";
 
     @Test
     public void testDoctypeMapper() throws URISyntaxException {
@@ -123,6 +126,11 @@ public class TestSerializer extends AbstractExtractorTest {
     @Test
     public void testOperationScriptingSerializer() throws URISyntaxException {
         assertSerialization("scripting-contrib.xml", OperationScriptingDescriptor.class, 1, EXPECTED_JSON_SCRIPTING);
+    }
+
+    @Test
+    public void testVocabularySerializer() throws URISyntaxException {
+        assertSerialization("vocabulary-contrib.xml", VocabularyDescriptor.class, 6, EXPECTED_JSON_VOCABULARY);
     }
 
     @Test

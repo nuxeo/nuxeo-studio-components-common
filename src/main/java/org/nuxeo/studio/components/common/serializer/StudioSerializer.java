@@ -34,7 +34,7 @@ import org.nuxeo.studio.components.common.bundle.ContributionsHolder;
 
 public class StudioSerializer {
 
-    private static final List<String> asArray = Arrays.asList("facets", "operations");
+    private static final List<String> asArray = Arrays.asList("facets", "operations", "vocabularies");
 
     private ContributionsHolder holder;
 
