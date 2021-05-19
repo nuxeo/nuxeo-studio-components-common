@@ -21,10 +21,13 @@ package org.nuxeo.studio.components.common.bundle;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 import org.nuxeo.studio.components.common.mapper.MappersManager;
 import org.nuxeo.studio.components.common.mapper.impl.AutomationMapper;
@@ -92,5 +95,32 @@ public class ContributionsHolder {
             }
         }
         return list;
+    }
+
+    /**
+     * Remove all contributions based on this descriptor.
+     *
+     * @param <T> Class of the descriptor
+     * @param descriptor
+     * @return a list of removed contributions or an empty list.
+     */
+    @SuppressWarnings("unchecked")
+    public <T> List<T> removeContributions(Class<T> descriptor) {
+        return Optional.ofNullable((List<T>) contributions.remove(descriptor.getName()))
+                       .orElse(Collections.emptyList());
+    }
+
+    /**
+     * Remove all contributions based on this descriptor that satisfy the given predicate.
+     *
+     * @param <T> Class of the descriptor
+     * @param descriptor
+     * @param filter a predicate which returns true for elements to be removed
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public <T> boolean removeContributions(Class<T> descriptor, Predicate<? super T> filter) {
+        return ((Collection<T>) contributions.getOrDefault(descriptor.getName(), Collections.emptyList())).removeIf(
+                filter);
     }
 }
