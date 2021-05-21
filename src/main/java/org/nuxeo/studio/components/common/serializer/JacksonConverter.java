@@ -31,10 +31,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nuxeo.studio.components.common.ExtractorOptions;
+import org.nuxeo.studio.components.common.mapper.descriptors.DocTemplateDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.DocumentTypeDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.EventListenerDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.FacetDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.LifeCycleDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.MailTemplateDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.PermissionDescriptor;
 import org.nuxeo.studio.components.common.serializer.adapter.DefaultAdapter;
 import org.nuxeo.studio.components.common.serializer.adapter.OperationAdapter;
@@ -45,10 +47,12 @@ import org.nuxeo.studio.components.common.serializer.adapter.SerializerAdapter;
 import org.nuxeo.studio.components.common.serializer.adapter.VocabularyAdapter;
 import org.nuxeo.studio.components.common.serializer.adapter.automation.OperationDocumentation;
 import org.nuxeo.studio.components.common.serializer.adapter.schema.Schema;
+import org.nuxeo.studio.components.common.serializer.mixin.DocTemplateMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.DocTypeMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.EventListenerMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.FacetMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.LifeCycleMixin;
+import org.nuxeo.studio.components.common.serializer.mixin.MailTemplateMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.OperationDocumentationMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.PermissionMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.SchemaMixin;
@@ -89,6 +93,8 @@ public class JacksonConverter {
         registerMixin(EventListenerDescriptor.class, EventListenerMixin.class);
         registerMixin(Schema.class, SchemaMixin.class);
         registerMixin(DocumentTypeDescriptor.class, DocTypeMixin.class);
+        registerMixin(MailTemplateDescriptor.class, MailTemplateMixin.class);
+        registerMixin(DocTemplateDescriptor.class, DocTemplateMixin.class);
     }
 
     public static JacksonConverter instance() {

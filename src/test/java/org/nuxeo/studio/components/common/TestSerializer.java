@@ -41,10 +41,12 @@ import org.junit.Test;
 import org.nuxeo.studio.components.common.bundle.BundleWalker;
 import org.nuxeo.studio.components.common.bundle.ContributionsHolder;
 import org.nuxeo.studio.components.common.bundle.RegistrationInfo;
+import org.nuxeo.studio.components.common.mapper.descriptors.DocTemplateDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.DocumentTypeDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.EventListenerDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.FacetDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.LifeCycleDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.MailTemplateDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.OperationChainDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.OperationDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.OperationScriptingDescriptor;
@@ -79,6 +81,10 @@ public class TestSerializer extends AbstractExtractorTest {
     public static final String EXPECTED_JSON_SCRIPTING = "[{\"id\":\"Scripting.HelloWorld\",\"aliases\":[],\"signature\":[\"string\",\"string\"],\"category\":null,\"label\":\"Scripting.HelloWorld\",\"requires\":null,\"since\":null,\"description\":null,\"params\":[{\"name\":\"lang\",\"description\":null,\"type\":\"string\",\"widget\":null,\"values\":[],\"order\":0,\"required\":false}]}]";
 
     public static final String EXPECTED_JSON_VOCABULARY = "[{\"parent\":null,\"id\":\"gg\",\"hierarchical\":false},{\"parent\":\"hh\",\"id\":\"hh\",\"hierarchical\":true},{\"parent\":\"hh\",\"id\":\"xx\",\"hierarchical\":false},{\"parent\":\"gg\",\"id\":\"yy\",\"hierarchical\":false}]";
+
+    public static final String EXPECTED_JSON_MAIL_TEMPLATES = "[\"mt1\",\"mt2\"]";
+
+    public static final String EXPECTED_JSON_DOC_TEMPLATES = "[\"dt1\",\"dt2\"]";
 
     @Test
     public void testDoctypeMapper() throws URISyntaxException {
@@ -131,6 +137,16 @@ public class TestSerializer extends AbstractExtractorTest {
     @Test
     public void testVocabularySerializer() throws URISyntaxException {
         assertSerialization("vocabulary-contrib.xml", VocabularyDescriptor.class, 6, EXPECTED_JSON_VOCABULARY);
+    }
+
+    @Test
+    public void testMailTemplateSerializer() throws URISyntaxException {
+        assertSerialization("mail-template-contrib.xml", MailTemplateDescriptor.class, 2, EXPECTED_JSON_MAIL_TEMPLATES);
+    }
+
+    @Test
+    public void testDocTemplateSerializer() throws URISyntaxException {
+        assertSerialization("doc-template-contrib.xml", DocTemplateDescriptor.class, 2, EXPECTED_JSON_DOC_TEMPLATES);
     }
 
     @Test

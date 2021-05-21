@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.ecm.platform.ec.notification.service.testMailTemplates">
+  <extension target="org.nuxeo.ecm.platform.ec.notification.service.NotificationService" point="templates">
+    <template name="mt1" src="data/templates/mt.ftl"/>
+    <template name="mt2" src="data/templates/mt.ftl"/>
+  </extension>
+</component>

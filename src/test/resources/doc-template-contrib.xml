@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.runtime.services.resource.testDocTemplates">
+  <extension target="org.nuxeo.runtime.services.resource.ResourceService" point="resources">
+    <resource name="dt1">data/templates/dt1</resource>
+    <resource name="dt2">data/templates/dt2</resource>
+  </extension>
+</component>
