@@ -42,6 +42,8 @@ public class ExtractorOptions {
 
     protected boolean failOnEmpty = false;
 
+    protected boolean failOnError = true;
+
     private List<String> directories = new ArrayList<>();
 
     public String getToken() {
@@ -141,6 +143,14 @@ public class ExtractorOptions {
 
     public void setJarFile(String jarFile) {
         this.jarFile = jarFile;
+    }
+
+    public boolean isFailOnError() {
+        return failOnError;
+    }
+
+    public void setFailOnError(boolean failOnError) {
+        this.failOnError = failOnError;
     }
 
     public void addSourceDirectory(String directory) {

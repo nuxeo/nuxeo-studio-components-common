@@ -29,10 +29,14 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.nuxeo.studio.components.common.ExtractorOptions;
 import org.nuxeo.studio.components.common.bundle.ContributionsHolder;
 
 public class StudioSerializer {
+
+    private static final Log log = LogFactory.getLog(StudioSerializer.class);
 
     private static final List<String> asArray = Arrays.asList("facets", "operations", "vocabularies", "mail_templates",
             "doc_templates");
@@ -82,7 +86,17 @@ public class StudioSerializer {
     }
 
     protected String serialize(Object obj, String name) {
-        return JacksonConverter.instance(options).serialize(obj, !asArray.contains(name));
+        try {
+            return JacksonConverter.instance(options).serialize(obj, !asArray.contains(name));
+        } catch (RuntimeException e) {
+            String message = String.format("Unable to serialize %s(%s) - %s", obj, obj.getClass(), name);
+            if (options.isFailOnError()) {
+                log.error(message, e);
+                throw e;
+            }
+            log.warn(message, e);
+            return null;
+        }
     }
 
     public String getDelimiter() {

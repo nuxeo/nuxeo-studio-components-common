@@ -58,6 +58,7 @@ import org.nuxeo.studio.components.common.runtime.ExtractorContext;
 import org.nuxeo.studio.components.common.serializer.StudioSerializer;
 import org.nuxeo.studio.components.common.serializer.adapter.schema.SimpleSchemaReader;
 
+import javassist.NotFoundException;
 import net.sf.json.test.JSONAssert;
 
 public class TestSerializer extends AbstractExtractorTest {
@@ -252,5 +253,33 @@ public class TestSerializer extends AbstractExtractorTest {
         SimpleSchemaReader ssr = new SimpleSchemaReader(file);
         ssr.load();
         assertEquals(7, ssr.getFields().size());
+    }
+
+    @Test
+    public void serializeMissingClass() throws URISyntaxException {
+        opts.setFailOnError(true);
+
+        ContributionsHolder holder = new ContributionsHolder();
+        holder.load(getRegistrationInfo("missing-operation-contrib.xml"));
+        StudioSerializer serializer = new StudioSerializer(holder, opts);
+
+        try {
+            serializer.serializeDescriptors(OperationDescriptor.class);
+        } catch (RuntimeException e) {
+            assertTrue(e.getCause() instanceof NotFoundException);
+            assertEquals(e.getMessage(), "javassist.NotFoundException: org.nuxeo.operation.missing.MyOperation");
+        }
+    }
+
+    @Test
+    public void serializeMissingClassWithout() throws URISyntaxException {
+        opts.setFailOnError(false);
+
+        ContributionsHolder holder = new ContributionsHolder();
+        holder.load(getRegistrationInfo("missing-operation-contrib.xml"));
+        StudioSerializer serializer = new StudioSerializer(holder, opts);
+
+        String output = serializer.serializeDescriptors(OperationDescriptor.class);
+        assertEquals("[]", output);
     }
 }
