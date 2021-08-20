@@ -26,26 +26,64 @@ import org.nuxeo.studio.components.common.mapper.ExtensionMapper;
 import org.nuxeo.studio.components.common.mapper.descriptors.EventListenerDescriptor;
 
 public class EventMapper extends ExtensionMapper {
-    public static List<String> SYSTEM_EVENTS;
+    public static List<String> CORE_EVENTS;
 
     static {
-        // Registering Common System events from Nuxeo classes in order to skip them during export as already
+        // Registering Common Core events from Nuxeo classes in order to skip them during export as already
         // present in Studio
         // XXX Must be tied from an external place... Studio, lib, whatever.
         // For now extracted from {@code org.nuxeo.ecm.core.api.LifeCycleConstants} and {@code
-        // org.nuxeo.ecm.core.api.event.DocumentEventTypes}
-        SYSTEM_EVENTS = Arrays.asList("aboutToCreate", "emptyDocumentModelCreated", "documentCreated", "aboutToImport",
-                "documentImported", "aboutToRemove", "documentRemoved", "documentRemovalCanceled",
-                "aboutToRemoveVersion", "versionRemoved", "beforeDocumentModification",
-                "beforeDocumentSecurityModification", "documentModified", "documentSecurityUpdated", "documentLocked",
-                "documentUnlocked", "aboutToCopy", "documentCreatedByCopy", "documentDuplicated", "aboutToMove",
-                "documentMoved", "documentPublished", "documentProxyPublished", "documentProxyUpdated",
-                "sectionContentPublished", "beforeRestoringDocument", "documentRestored", "sessionSaved",
-                "childrenOrderChanged", "aboutToCheckout", "documentCheckedOut", "incrementBeforeUpdate",
-                "aboutToCheckIn", "documentCheckedIn", "subscriptionAssigned", "emailDocumentSend",
-                "userWorkspaceCreated", "binaryTextUpdated", "documentTagUpdated", "ACEStatusUpdated", "deleted",
-                "delete", "undelete", "lifecycle_transition_event", "from", "to", "transition", "documentUndeleted",
-                "initialLifecycleState");
+        // org.nuxeo.ecm.core.api.event.DocumentEventTypes} and server-10.10 studio registries
+        CORE_EVENTS = Arrays.asList("ACEStatusUpdated", //
+                "aboutToCheckIn", //
+                "aboutToCheckout", //
+                "aboutToCopy", //
+                "aboutToCreate", //
+                "aboutToImport", //
+                "aboutToMove", //
+                "aboutToRemove", //
+                "aboutToRemoveVersion", //
+                "addedToCollection", //
+                "beforeAddedToCollection", //
+                "beforeDocumentModification", //
+                "beforeDocumentSecurityModification", //
+                "beforeRemovedFromCollection", //
+                "beforeRestoringDocument", //
+                "binaryTextUpdated", //
+                "childrenOrderChanged", //
+                "documentCheckedIn", //
+                "documentCheckedOut", //
+                "documentCreated", //
+                "documentCreatedByCopy", //
+                "documentDuplicated", //
+                "documentImported", //
+                "documentLocked", //
+                "documentModified", //
+                "documentMoved", //
+                "documentProxyPublished", //
+                "documentProxyUpdated", //
+                "documentPublished", //
+                "documentRemovalCanceled", //
+                "documentRemoved", //
+                "documentRestored", //
+                "documentSecurityUpdated", //
+                "documentTrashed", //
+                "documentTagUpdated", //
+                "documentUndeleted", //
+                "documentUnlocked", //
+                "documentUntrashed", //
+                "emailDocumentSend", //
+                "emptyDocumentModelCreated", //
+                "incrementBeforeUpdate", //
+                "initialLifecycleState", //
+                "lifecycle_transition_event", //
+                "removedFromCollection", //
+                "sectionContentPublished", //
+                "sessionSaved", //
+                "subscriptionAssigned", //
+                "userWorkspaceCreated", //
+                "versionRemoved", //
+                "workflowCanceled");
     }
 
     @Override
@@ -62,6 +100,6 @@ public class EventMapper extends ExtensionMapper {
     public boolean isEnabled(Object contribution) {
         EventListenerDescriptor eld = (EventListenerDescriptor) contribution;
         return eld.isEnabled() && eld.getEvents() != null
-                && !eld.getEvents().stream().allMatch(SYSTEM_EVENTS::contains);
+                && !eld.getEvents().stream().allMatch(CORE_EVENTS::contains);
     }
 }
