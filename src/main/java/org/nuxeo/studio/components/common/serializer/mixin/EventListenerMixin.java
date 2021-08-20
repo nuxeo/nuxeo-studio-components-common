@@ -19,7 +19,7 @@
 
 package org.nuxeo.studio.components.common.serializer.mixin;
 
-import static org.nuxeo.studio.components.common.mapper.impl.EventMapper.SYSTEM_EVENTS;
+import static org.nuxeo.studio.components.common.mapper.impl.EventMapper.CORE_EVENTS;
 import static org.nuxeo.studio.components.common.serializer.SerializerHelper.humanize;
 
 import java.io.IOException;
@@ -44,7 +44,7 @@ public abstract class EventListenerMixin {
             // Export only not system's events
             String events = value.getEvents()
                                  .stream()
-                                 .filter(e -> !SYSTEM_EVENTS.contains(e))
+                                 .filter(e -> !CORE_EVENTS.contains(e))
                                  .map(e -> String.format("\"%s\":\"%s\"", e, humanize(e)))
                                  .collect(Collectors.joining(","));
 

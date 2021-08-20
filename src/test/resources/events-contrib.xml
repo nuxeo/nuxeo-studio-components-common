@@ -9,8 +9,8 @@
       <event>lifecycle_transition_event</event>
       <event>documentUndeleted</event>
       <event>documentCreatedByCopy</event>
-      <event>MyFirstEvent</event>
-      <event>MySecondEvent</event>
+      <event>myFirstEvent</event>
+      <event>my_second-event</event>
     </listener>
 
     <listener name="otherListenerWithoutNewEvent" async="true" postCommit="true"

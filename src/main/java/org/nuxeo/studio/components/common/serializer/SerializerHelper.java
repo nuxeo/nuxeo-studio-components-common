@@ -19,7 +19,13 @@
 
 package org.nuxeo.studio.components.common.serializer;
 
-import org.apache.commons.lang3.StringUtils;
+import static org.apache.commons.lang3.StringUtils.capitalize;
+import static org.apache.commons.lang3.StringUtils.containsOnly;
+import static org.apache.commons.lang3.StringUtils.lowerCase;
+import static org.apache.commons.lang3.StringUtils.splitByCharacterTypeCamelCase;
+
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SerializerHelper {
     private SerializerHelper() {
@@ -33,6 +39,10 @@ public class SerializerHelper {
      * @return the String humanized
      */
     public static String humanize(String value) {
-        return StringUtils.capitalize(StringUtils.join(StringUtils.splitByCharacterTypeCamelCase(value), " "));
+        String[] words = splitByCharacterTypeCamelCase(value);
+        return capitalize(Stream.of(words)
+                                .filter(w -> !containsOnly(w, '_', '-'))
+                                .map(w -> lowerCase(w))
+                                .collect(Collectors.joining(" ")));
     }
 }

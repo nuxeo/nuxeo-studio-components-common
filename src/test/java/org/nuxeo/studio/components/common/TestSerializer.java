@@ -67,11 +67,11 @@ public class TestSerializer extends AbstractExtractorTest {
 
     public static final String EXPECTED_JSON_FACETS = "[{\"id\": \"Picture\", \"schemas\": [\"file\",\"picture\",\"image_metadata\"]}]";
 
-    public static final String EXPECTED_JSON_PERMISSIONS = "{\"Browse\": \"Browse\", \"ReadProperties\": \"Read Properties\", \"ReadChildren\": \"Read Children\", \"ReadLifeCycle\": \"Read Life Cycle\", \"smallCamelCase\": \"Small Camel Case\"}";
+    public static final String EXPECTED_JSON_PERMISSIONS = "{\"Browse\": \"Browse\", \"ReadProperties\": \"Read properties\", \"ReadChildren\": \"Read children\", \"ReadLifeCycle\": \"Read life cycle\", \"smallCamelCase\": \"Small camel case\"}";
 
     public static final String EXPECTED_JSON_LIFECYCLES = "{\"default\": {\"states\": [\"project\", \"approved\", \"obsolete\", \"deleted\"],\"transitions\": [\"approve\", \"obsolete\", \"delete\", \"undelete\", \"backToProject\"]}}";
 
-    public static final String EXPECTED_JSON_EVENT = "{\"MyFirstEvent\": \"My First Event\", \"MySecondEvent\": \"My Second Event\"}";
+    public static final String EXPECTED_JSON_EVENT = "{\"myFirstEvent\": \"My first event\", \"my_second-event\": \"My second event\"}";
 
     public static final String EXPECTED_JSON_SCHEMA = "{\"dublincore\":{\"@prefix\":\"dc\",\"description\":\"string\",\"created\":\"date\",\"coverage\":\"string\",\"title\":\"string\",\"complex\":{\"fields\":{\"mime-type\":\"string\",\"data\":\"binary\",\"name\":\"string\",\"length\":\"long\",\"digest\":\"string\",\"encoding\":\"string\"},\"type\":\"complex\"},\"modified\":\"date\",\"nature\":\"string\",\"lastContributor\":\"string\",\"content\":\"blob\",\"source\":\"string\",\"publisher\":\"string\"},\"simpletype\":{\"@prefix\":\"st\",\"title\":\"string\",\"description\":\"string\",\"coverage\":\"string\"}}";
 
