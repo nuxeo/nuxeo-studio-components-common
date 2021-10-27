@@ -39,7 +39,7 @@ public class StudioSerializer {
     private static final Log log = LogFactory.getLog(StudioSerializer.class);
 
     private static final List<String> asArray = Arrays.asList("facets", "operations", "vocabularies", "mail_templates",
-            "doc_templates");
+            "doc_templates", "workflows");
 
     private ContributionsHolder holder;
 

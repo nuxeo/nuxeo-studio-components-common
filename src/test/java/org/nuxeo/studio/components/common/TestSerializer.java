@@ -53,6 +53,7 @@ import org.nuxeo.studio.components.common.mapper.descriptors.OperationScriptingD
 import org.nuxeo.studio.components.common.mapper.descriptors.PermissionDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.SchemaBindingDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.VocabularyDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.WorkflowDescriptor;
 import org.nuxeo.studio.components.common.mapper.impl.TypeServiceMapper;
 import org.nuxeo.studio.components.common.runtime.ExtractorContext;
 import org.nuxeo.studio.components.common.serializer.StudioSerializer;
@@ -86,6 +87,8 @@ public class TestSerializer extends AbstractExtractorTest {
     public static final String EXPECTED_JSON_MAIL_TEMPLATES = "[\"mt1\",\"mt2\"]";
 
     public static final String EXPECTED_JSON_DOC_TEMPLATES = "[\"dt1\",\"dt2\"]";
+
+    public static final String EXPECTED_JSON_WORKFLOWS = "[\"qq\",\"ww\"]";
 
     @Test
     public void testDoctypeMapper() throws URISyntaxException {
@@ -148,6 +151,11 @@ public class TestSerializer extends AbstractExtractorTest {
     @Test
     public void testDocTemplateSerializer() throws URISyntaxException {
         assertSerialization("doc-template-contrib.xml", DocTemplateDescriptor.class, 2, EXPECTED_JSON_DOC_TEMPLATES);
+    }
+
+    @Test
+    public void testWorkflowSerializer() throws URISyntaxException {
+        assertSerialization("workflow-contrib.xml", WorkflowDescriptor.class, 2, EXPECTED_JSON_WORKFLOWS);
     }
 
     @Test
