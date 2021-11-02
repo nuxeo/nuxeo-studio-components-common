@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.nuxeo.studio.components.common.bundle.ContributionsHolder;
+import org.nuxeo.studio.components.common.mapper.descriptors.PageProviderDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.SchemaBindingDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.WorkflowDescriptor;
 
@@ -29,5 +30,8 @@ public class TestStudioProjectExtraction extends AbstractExtractorTest {
 
         List<WorkflowDescriptor> workflowContribs = holder.getContributions(WorkflowDescriptor.class);
         assertThat(workflowContribs).hasSize(3);
+
+        List<PageProviderDescriptor> ppContribs = holder.getContributions(PageProviderDescriptor.class);
+        assertThat(ppContribs).hasSize(1);
     }
 }
