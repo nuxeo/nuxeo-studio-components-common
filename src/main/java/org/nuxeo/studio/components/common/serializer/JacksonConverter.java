@@ -37,6 +37,7 @@ import org.nuxeo.studio.components.common.mapper.descriptors.EventListenerDescri
 import org.nuxeo.studio.components.common.mapper.descriptors.FacetDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.LifeCycleDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.MailTemplateDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.PageProviderDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.PermissionDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.WorkflowDescriptor;
 import org.nuxeo.studio.components.common.serializer.adapter.DefaultAdapter;
@@ -55,6 +56,7 @@ import org.nuxeo.studio.components.common.serializer.mixin.FacetMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.LifeCycleMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.MailTemplateMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.OperationDocumentationMixin;
+import org.nuxeo.studio.components.common.serializer.mixin.PageProviderMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.PermissionMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.SchemaMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.WorkflowMixin;
@@ -98,6 +100,7 @@ public class JacksonConverter {
         registerMixin(MailTemplateDescriptor.class, MailTemplateMixin.class);
         registerMixin(DocTemplateDescriptor.class, DocTemplateMixin.class);
         registerMixin(WorkflowDescriptor.class, WorkflowMixin.class);
+        registerMixin(PageProviderDescriptor.class, PageProviderMixin.class);
     }
 
     public static JacksonConverter instance() {

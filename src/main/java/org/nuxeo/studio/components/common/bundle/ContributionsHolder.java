@@ -35,6 +35,7 @@ import org.nuxeo.studio.components.common.mapper.impl.DocTemplateMapper;
 import org.nuxeo.studio.components.common.mapper.impl.EventMapper;
 import org.nuxeo.studio.components.common.mapper.impl.LifeCycleMapper;
 import org.nuxeo.studio.components.common.mapper.impl.MailTemplateMapper;
+import org.nuxeo.studio.components.common.mapper.impl.PageProviderMapper;
 import org.nuxeo.studio.components.common.mapper.impl.PermissionsMapper;
 import org.nuxeo.studio.components.common.mapper.impl.TypeServiceMapper;
 import org.nuxeo.studio.components.common.mapper.impl.VocabularyMapper;
@@ -64,7 +65,8 @@ public class ContributionsHolder {
                            .add(new VocabularyMapper())
                            .add(new WorkflowMapper())
                            .add(new MailTemplateMapper())
-                           .add(new DocTemplateMapper()));
+                           .add(new DocTemplateMapper())
+                           .add(new PageProviderMapper()));
     }
 
     public ContributionsHolder(MappersManager manager) {

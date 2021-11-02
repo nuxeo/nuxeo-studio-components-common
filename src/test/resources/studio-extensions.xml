@@ -2,6 +2,20 @@
 
 <component name="studio.extensions.test-project" version="1.0.0">
   <require>org.nuxeo.runtime.started</require>
+  <extension target="org.nuxeo.ecm.platform.query.api.PageProviderService" point="providers">
+    <genericPageProvider class="org.nuxeo.elasticsearch.provider.ElasticSearchNxqlPageProvider" name="p1pageprovider">
+      <trackUsage>true</trackUsage>
+      <property name="coreSession">#{documentManager}</property>
+      <whereClause>
+        <predicate parameter="file:content" operator="LIKE">
+          <field schema="p1pageprovider_pp" name="file_content"/>
+        </predicate>
+        <fixedPart>ecm:mixinType != 'HiddenInNavigation' AND ecm:isVersion = 0 AND ecm:isTrashed = 0</fixedPart>
+      </whereClause>
+      <searchDocumentType>p1pageprovider_pp</searchDocumentType>
+      <pageSize>10</pageSize>
+    </genericPageProvider>
+  </extension>
   <extension target="org.nuxeo.ecm.core.schema.TypeService" point="schema">
     <schema name="aaa" prefix="aaa" override="true" src="data/schemas/aaa.xsd"/>
     <schema name="ddd" prefix="ddd" override="true" src="data/schemas/ddd.xsd"/>

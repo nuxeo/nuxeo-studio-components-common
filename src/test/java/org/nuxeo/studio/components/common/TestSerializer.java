@@ -50,6 +50,7 @@ import org.nuxeo.studio.components.common.mapper.descriptors.MailTemplateDescrip
 import org.nuxeo.studio.components.common.mapper.descriptors.OperationChainDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.OperationDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.OperationScriptingDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.PageProviderDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.PermissionDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.SchemaBindingDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.VocabularyDescriptor;
@@ -89,6 +90,8 @@ public class TestSerializer extends AbstractExtractorTest {
     public static final String EXPECTED_JSON_DOC_TEMPLATES = "[\"dt1\",\"dt2\"]";
 
     public static final String EXPECTED_JSON_WORKFLOWS = "[\"qq\",\"ww\"]";
+
+    public static final String EXPECTED_JSON_PAGE_PROVIDERS = "[\"pp1\",\"pp2\"]";
 
     @Test
     public void testDoctypeMapper() throws URISyntaxException {
@@ -156,6 +159,11 @@ public class TestSerializer extends AbstractExtractorTest {
     @Test
     public void testWorkflowSerializer() throws URISyntaxException {
         assertSerialization("workflow-contrib.xml", WorkflowDescriptor.class, 2, EXPECTED_JSON_WORKFLOWS);
+    }
+
+    @Test
+    public void testPageProviderSerializer() throws URISyntaxException {
+        assertSerialization("page-provider-contrib.xml", PageProviderDescriptor.class, 2, EXPECTED_JSON_PAGE_PROVIDERS);
     }
 
     @Test
