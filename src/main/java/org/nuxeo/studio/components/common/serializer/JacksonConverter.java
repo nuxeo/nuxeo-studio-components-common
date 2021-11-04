@@ -31,6 +31,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nuxeo.studio.components.common.ExtractorOptions;
+import org.nuxeo.studio.components.common.mapper.descriptors.DirectoryDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.DocTemplateDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.DocumentTypeDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.EventListenerDescriptor;
@@ -41,6 +42,7 @@ import org.nuxeo.studio.components.common.mapper.descriptors.PageProviderDescrip
 import org.nuxeo.studio.components.common.mapper.descriptors.PermissionDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.WorkflowDescriptor;
 import org.nuxeo.studio.components.common.serializer.adapter.DefaultAdapter;
+import org.nuxeo.studio.components.common.serializer.adapter.DirectoryAdapter;
 import org.nuxeo.studio.components.common.serializer.adapter.OperationAdapter;
 import org.nuxeo.studio.components.common.serializer.adapter.OperationChainAdapter;
 import org.nuxeo.studio.components.common.serializer.adapter.OperationScriptingAdapter;
@@ -49,6 +51,7 @@ import org.nuxeo.studio.components.common.serializer.adapter.SerializerAdapter;
 import org.nuxeo.studio.components.common.serializer.adapter.VocabularyAdapter;
 import org.nuxeo.studio.components.common.serializer.adapter.automation.OperationDocumentation;
 import org.nuxeo.studio.components.common.serializer.adapter.schema.Schema;
+import org.nuxeo.studio.components.common.serializer.mixin.DirectoryMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.DocTemplateMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.DocTypeMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.EventListenerMixin;
@@ -88,6 +91,7 @@ public class JacksonConverter {
         registerAdapter(OperationChainAdapter.class);
         registerAdapter(OperationScriptingAdapter.class);
         registerAdapter(VocabularyAdapter.class);
+        registerAdapter(DirectoryAdapter.class);
 
         // Mixins allow to define the way the serialization is done
         registerMixin(FacetDescriptor.class, FacetMixin.class);
@@ -101,6 +105,7 @@ public class JacksonConverter {
         registerMixin(DocTemplateDescriptor.class, DocTemplateMixin.class);
         registerMixin(WorkflowDescriptor.class, WorkflowMixin.class);
         registerMixin(PageProviderDescriptor.class, PageProviderMixin.class);
+        registerMixin(DirectoryDescriptor.class, DirectoryMixin.class);
     }
 
     public static JacksonConverter instance() {
