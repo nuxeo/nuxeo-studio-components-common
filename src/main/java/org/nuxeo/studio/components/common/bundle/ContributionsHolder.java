@@ -31,6 +31,7 @@ import java.util.function.Predicate;
 
 import org.nuxeo.studio.components.common.mapper.MappersManager;
 import org.nuxeo.studio.components.common.mapper.impl.AutomationMapper;
+import org.nuxeo.studio.components.common.mapper.impl.DirectoryMapper;
 import org.nuxeo.studio.components.common.mapper.impl.DocTemplateMapper;
 import org.nuxeo.studio.components.common.mapper.impl.EventMapper;
 import org.nuxeo.studio.components.common.mapper.impl.LifeCycleMapper;
@@ -66,7 +67,8 @@ public class ContributionsHolder {
                            .add(new WorkflowMapper())
                            .add(new MailTemplateMapper())
                            .add(new DocTemplateMapper())
-                           .add(new PageProviderMapper()));
+                           .add(new PageProviderMapper())
+                           .add(new DirectoryMapper()));
     }
 
     public ContributionsHolder(MappersManager manager) {

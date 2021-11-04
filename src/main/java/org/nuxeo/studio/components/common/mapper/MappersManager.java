@@ -19,14 +19,15 @@
 
 package org.nuxeo.studio.components.common.mapper;
 
-import org.nuxeo.studio.components.common.bundle.Extension;
-import org.nuxeo.studio.components.common.mapper.xmap.XMap;
-import org.nuxeo.studio.components.common.runtime.ExtractorContext;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import org.nuxeo.studio.components.common.bundle.Extension;
+import org.nuxeo.studio.components.common.mapper.xmap.XMap;
+import org.nuxeo.studio.components.common.runtime.ExtractorContext;
 
 /**
  * Mappers Manager holding all registered {@link ExtensionMapper} and can load an {@link Extension} to his Descriptor
@@ -82,16 +83,15 @@ public class MappersManager {
     }
 
     public Object[] load(Extension ext) {
-        ExtensionMapper mapper = mappers.stream() //
-                                        .filter(s -> s.accept(ext))
-                                        .findFirst()
-                                        .orElse(null);
+        List<Object> loaded = new ArrayList<>();
+        mappers.stream() // we go through every mappers accepting the extension in case there are multiple mappers
+                         // accepting the same extension (i.e directories and vocabularies)
+               .filter(s -> s.accept(ext))
+               .forEach(mapper -> {
+                   loaded.addAll(Arrays.asList(mapper.loadAll(ExtractorContext.instance, ext)));
+               });
 
-        if (mapper != null) {
-            return mapper.loadAll(ExtractorContext.instance, ext);
-        } else {
-            return new Object[] {};
-        }
+        return loaded.toArray();
     }
 
     public String[] getRegisteredTargets() {

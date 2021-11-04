@@ -41,6 +41,7 @@ import org.junit.Test;
 import org.nuxeo.studio.components.common.bundle.BundleWalker;
 import org.nuxeo.studio.components.common.bundle.ContributionsHolder;
 import org.nuxeo.studio.components.common.bundle.RegistrationInfo;
+import org.nuxeo.studio.components.common.mapper.descriptors.DirectoryDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.DocTemplateDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.DocumentTypeDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.EventListenerDescriptor;
@@ -92,6 +93,8 @@ public class TestSerializer extends AbstractExtractorTest {
     public static final String EXPECTED_JSON_WORKFLOWS = "[\"qq\",\"ww\"]";
 
     public static final String EXPECTED_JSON_PAGE_PROVIDERS = "[\"pp1\",\"pp2\"]";
+    
+    public static final String EXPECTED_JSON_DIRECTORIES = "[\"userDirectory\",\"groupDirectory\"]";
 
     @Test
     public void testDoctypeMapper() throws URISyntaxException {
@@ -143,7 +146,7 @@ public class TestSerializer extends AbstractExtractorTest {
 
     @Test
     public void testVocabularySerializer() throws URISyntaxException {
-        assertSerialization("vocabulary-contrib.xml", VocabularyDescriptor.class, 6, EXPECTED_JSON_VOCABULARY);
+        assertSerialization("directory-vocabulary-contrib.xml", VocabularyDescriptor.class, 6, EXPECTED_JSON_VOCABULARY);
     }
 
     @Test
@@ -164,6 +167,11 @@ public class TestSerializer extends AbstractExtractorTest {
     @Test
     public void testPageProviderSerializer() throws URISyntaxException {
         assertSerialization("page-provider-contrib.xml", PageProviderDescriptor.class, 2, EXPECTED_JSON_PAGE_PROVIDERS);
+    }
+    
+    @Test
+    public void testDirectorySerializer() throws URISyntaxException {
+        assertSerialization("directory-vocabulary-contrib.xml", DirectoryDescriptor.class, 6, EXPECTED_JSON_DIRECTORIES);
     }
 
     @Test
