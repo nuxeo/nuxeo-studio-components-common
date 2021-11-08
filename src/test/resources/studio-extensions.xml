@@ -250,6 +250,32 @@
       <createTablePolicy>on_missing_columns</createTablePolicy>
       <dataLoadingPolicy>skip_duplicate</dataLoadingPolicy>
     </directory>
+    <directory name="gg" extends="template-vocabulary">
+      <autoincrementIdField>false</autoincrementIdField>
+      <createTablePolicy>never</createTablePolicy>
+      <table>studio_vocabulary_gg</table>
+      <dataFile>data/vocabularies/gg.csv</dataFile>
+      <cacheEntryName>vocab-gg-cache</cacheEntryName>
+      <cacheEntryWithoutReferencesName>vocab-gg-cache-without-references</cacheEntryWithoutReferencesName>
+      <deleteConstraint class="org.nuxeo.ecm.directory.HierarchicalDirectoryDeleteConstraint">
+        <property name="targetDirectory">yy</property>
+        <property name="targetDirectoryField">parent</property>
+      </deleteConstraint>
+    </directory>
+    <directory name="hh" extends="template-xvocabulary">
+      <autoincrementIdField>false</autoincrementIdField>
+      <createTablePolicy>on_missing_columns</createTablePolicy>
+      <dataLoadingPolicy>skip_duplicate</dataLoadingPolicy>
+      <table>studio_vocabulary_hh</table>
+      <dataFile>data/vocabularies/hh.csv</dataFile>
+      <parentDirectory>hh</parentDirectory>
+      <cacheEntryName>vocab-hh-cache</cacheEntryName>
+      <cacheEntryWithoutReferencesName>vocab-hh-cache-without-references</cacheEntryWithoutReferencesName>
+      <deleteConstraint class="org.nuxeo.ecm.directory.HierarchicalDirectoryDeleteConstraint">
+        <property name="targetDirectory">hh</property>
+        <property name="targetDirectoryField">parent</property>
+      </deleteConstraint>
+    </directory>
   </extension>
   <extension target="org.nuxeo.ecm.platform.routing.service" point="routeModelImporter">
     <template-resource id="qq" path="data/qq.zip"/>
@@ -275,5 +301,13 @@
         <resource>nuxeo-test-project-bundle.html</resource>
       </resources>
     </bundle>
+  </extension>
+  <extension target="org.nuxeo.ecm.automation.server.AutomationServer" point="bindings">
+    <binding name="Document.AddFacet" chain="false">
+      <administrator>true</administrator>
+    </binding>
+    <binding name="p1chain" chain="true">
+      <secure>true</secure>
+    </binding>
   </extension>
 </component>

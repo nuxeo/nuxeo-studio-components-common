@@ -48,6 +48,7 @@ import org.nuxeo.studio.components.common.mapper.descriptors.EventListenerDescri
 import org.nuxeo.studio.components.common.mapper.descriptors.FacetDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.LifeCycleDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.MailTemplateDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.OpRestBindingDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.OperationChainDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.OperationDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.OperationScriptingDescriptor;
@@ -93,8 +94,10 @@ public class TestSerializer extends AbstractExtractorTest {
     public static final String EXPECTED_JSON_WORKFLOWS = "[\"qq\",\"ww\"]";
 
     public static final String EXPECTED_JSON_PAGE_PROVIDERS = "[\"pp1\",\"pp2\"]";
-    
+
     public static final String EXPECTED_JSON_DIRECTORIES = "[\"userDirectory\",\"groupDirectory\"]";
+
+    public static final String EXPECTED_JSON_OP_REST_BINDINGS = "[\"Document.AddFacet\",\"p1chain\"]";
 
     @Test
     public void testDoctypeMapper() throws URISyntaxException {
@@ -146,7 +149,8 @@ public class TestSerializer extends AbstractExtractorTest {
 
     @Test
     public void testVocabularySerializer() throws URISyntaxException {
-        assertSerialization("directory-vocabulary-contrib.xml", VocabularyDescriptor.class, 6, EXPECTED_JSON_VOCABULARY);
+        assertSerialization("directory-vocabulary-contrib.xml", VocabularyDescriptor.class, 6,
+                EXPECTED_JSON_VOCABULARY);
     }
 
     @Test
@@ -168,10 +172,17 @@ public class TestSerializer extends AbstractExtractorTest {
     public void testPageProviderSerializer() throws URISyntaxException {
         assertSerialization("page-provider-contrib.xml", PageProviderDescriptor.class, 2, EXPECTED_JSON_PAGE_PROVIDERS);
     }
-    
+
     @Test
     public void testDirectorySerializer() throws URISyntaxException {
-        assertSerialization("directory-vocabulary-contrib.xml", DirectoryDescriptor.class, 6, EXPECTED_JSON_DIRECTORIES);
+        assertSerialization("directory-vocabulary-contrib.xml", DirectoryDescriptor.class, 6,
+                EXPECTED_JSON_DIRECTORIES);
+    }
+
+    @Test
+    public void testOpRestBindingSerializer() throws URISyntaxException {
+        assertSerialization("op-rest-binding-contrib.xml", OpRestBindingDescriptor.class, 2,
+                EXPECTED_JSON_OP_REST_BINDINGS);
     }
 
     @Test
