@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<extension target="org.nuxeo.ecm.automation.server.AutomationServer" point="bindings">
+    <binding name="Document.AddFacet" chain="false">
+      <administrator>true</administrator>
+    </binding>
+    <binding name="p1chain" chain="true">
+      <secure>true</secure>
+    </binding>
+</extension>
