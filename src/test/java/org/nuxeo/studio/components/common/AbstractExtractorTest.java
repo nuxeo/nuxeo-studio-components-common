@@ -29,7 +29,6 @@ import java.net.URL;
 
 import org.junit.After;
 import org.junit.Before;
-
 import org.nuxeo.studio.components.common.bundle.BundleWalker;
 import org.nuxeo.studio.components.common.bundle.ContributionsHolder;
 import org.nuxeo.studio.components.common.bundle.RegistrationInfo;
@@ -70,6 +69,11 @@ public class AbstractExtractorTest {
         ContributionsHolder holder = new ContributionsHolder();
         holder.load(ri);
         return holder;
+    }
+
+    protected void loadResources(String... filenames) {
+        ContributionsHolder holder = new ContributionsHolder();
+        URL resource = TestHelper.getResource(filenames[0]);
     }
 
     protected <T> void assertSerialization(String component, Class<T> descriptor, int size, String expectedJson)

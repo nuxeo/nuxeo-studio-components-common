@@ -24,18 +24,34 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.jar.Manifest;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.nuxeo.studio.components.common.mapper.descriptors.CSVResourceDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.I18nResourceDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.ImageResourceDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.ResourceDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.XSDResourceDescriptor;
 
 public class BundleWalker {
 
     private static Log log = LogFactory.getLog(BundleWalker.class);
+
+    public static final String IMG_RESOURCES_PATH = "/web/nuxeo.war/img";
+
+    public static final String CSV_RESOURCES_PATH = "/data/vocabularies";
+
+    public static final String I18N_RESOURCES_PATH = "/data/i18n";
+
+    public static final String XSD_RESOURCES_PATH = "/data/schemas";
 
     private Path basePath;
 
@@ -92,6 +108,52 @@ public class BundleWalker {
         return getComponents().map(this::read).filter(Objects::nonNull);
     }
 
+    public Stream<ResourceDescriptor> getResourceDescriptors(boolean isJarFile) throws IOException {
+        List<ResourceDescriptor> descriptors = new ArrayList<>();
+
+        // Load images resources
+        Path imgResourcesPath = isJarFile ? getBasePath().resolve(IMG_RESOURCES_PATH)
+                : new File(getBasePath() + IMG_RESOURCES_PATH).toPath();
+        if (Files.exists(imgResourcesPath)) {
+            descriptors.addAll(Files.walk(imgResourcesPath)
+                                    .filter(Files::isRegularFile)
+                                    .map(path -> new ImageResourceDescriptor(getResourceName(imgResourcesPath, path)))
+                                    .collect(Collectors.toList()));
+        }
+
+        // Load csv resources
+        Path csvResourcesPath = isJarFile ? getBasePath().resolve(CSV_RESOURCES_PATH)
+                : new File(getBasePath() + CSV_RESOURCES_PATH).toPath();
+        if (Files.exists(csvResourcesPath)) {
+            descriptors.addAll(Files.walk(csvResourcesPath)
+                                    .filter(Files::isRegularFile)
+                                    .map(path -> new CSVResourceDescriptor(getResourceName(csvResourcesPath, path)))
+                                    .collect(Collectors.toList()));
+        }
+
+        // Load i18n resources
+        Path i18nResourcesPath = isJarFile ? getBasePath().resolve(I18N_RESOURCES_PATH)
+                : new File(getBasePath() + I18N_RESOURCES_PATH).toPath();
+        if (Files.exists(i18nResourcesPath)) {
+            descriptors.addAll(Files.walk(i18nResourcesPath)
+                                    .filter(Files::isRegularFile)
+                                    .map(path -> new I18nResourceDescriptor(getResourceName(i18nResourcesPath, path)))
+                                    .collect(Collectors.toList()));
+        }
+
+        // Load xsd resources
+        Path xsdResourcesPath = isJarFile ? getBasePath().resolve(XSD_RESOURCES_PATH)
+                : new File(getBasePath() + XSD_RESOURCES_PATH).toPath();
+        if (Files.exists(xsdResourcesPath)) {
+            descriptors.addAll(Files.walk(xsdResourcesPath)
+                                    .filter(Files::isRegularFile)
+                                    .map(path -> new XSDResourceDescriptor(getResourceName(xsdResourcesPath, path)))
+                                    .collect(Collectors.toList()));
+        }
+
+        return descriptors.stream();
+    }
+
     public RegistrationInfo read(Path component) {
         try (InputStream is = Files.newInputStream(component)) {
             return RegistrationInfo.read(is);
@@ -100,11 +162,22 @@ public class BundleWalker {
         }
     }
 
+    public Path getBasePath() {
+        return basePath;
+    }
+
     public void setBasePath(File basePath) {
         if (basePath != null) {
             this.basePath = basePath.toPath();
         } else {
             this.basePath = null;
         }
+    }
+
+    private String getResourceName(Path resourcesDirPath, Path path) {
+        // We create resource name by relativizing the resource path to its root container,
+        // and normalizing separator.
+        String name = resourcesDirPath.relativize(path).toString().replace("\\", "/");
+        return name;
     }
 }

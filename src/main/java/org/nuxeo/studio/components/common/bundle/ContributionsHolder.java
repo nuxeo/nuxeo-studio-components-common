@@ -30,18 +30,23 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import org.nuxeo.studio.components.common.mapper.MappersManager;
+import org.nuxeo.studio.components.common.mapper.descriptors.ResourceDescriptor;
 import org.nuxeo.studio.components.common.mapper.impl.AutomationMapper;
+import org.nuxeo.studio.components.common.mapper.impl.CSVResourcesMapper;
 import org.nuxeo.studio.components.common.mapper.impl.DirectoryMapper;
 import org.nuxeo.studio.components.common.mapper.impl.DocTemplateMapper;
 import org.nuxeo.studio.components.common.mapper.impl.EventMapper;
+import org.nuxeo.studio.components.common.mapper.impl.I18nResourcesMapper;
+import org.nuxeo.studio.components.common.mapper.impl.ImageResourcesMapper;
 import org.nuxeo.studio.components.common.mapper.impl.LifeCycleMapper;
 import org.nuxeo.studio.components.common.mapper.impl.MailTemplateMapper;
+import org.nuxeo.studio.components.common.mapper.impl.OpRestBindingMapper;
 import org.nuxeo.studio.components.common.mapper.impl.PageProviderMapper;
 import org.nuxeo.studio.components.common.mapper.impl.PermissionsMapper;
 import org.nuxeo.studio.components.common.mapper.impl.TypeServiceMapper;
 import org.nuxeo.studio.components.common.mapper.impl.VocabularyMapper;
-import org.nuxeo.studio.components.common.mapper.impl.OpRestBindingMapper;
 import org.nuxeo.studio.components.common.mapper.impl.WorkflowMapper;
+import org.nuxeo.studio.components.common.mapper.impl.XSDResourcesMapper;
 
 /**
  * Contributions Holder is aim to map and track all visited contributions.
@@ -70,7 +75,11 @@ public class ContributionsHolder {
                            .add(new DocTemplateMapper())
                            .add(new PageProviderMapper())
                            .add(new DirectoryMapper())
-                           .add(new OpRestBindingMapper()));
+                           .add(new OpRestBindingMapper())
+                           .add(new ImageResourcesMapper())
+                           .add(new CSVResourcesMapper())
+                           .add(new I18nResourcesMapper())
+                           .add(new XSDResourcesMapper()));
     }
 
     public ContributionsHolder(MappersManager manager) {
@@ -87,6 +96,12 @@ public class ContributionsHolder {
                     s -> new ArrayList<>());
             sortedContributions.add(c);
         }));
+    }
+
+    public void load(ResourceDescriptor rd) {
+        List<Object> sortedContributions = contributions.computeIfAbsent(rd.getClass().getName(),
+                s -> new ArrayList<>());
+        sortedContributions.add(rd);
     }
 
     /**

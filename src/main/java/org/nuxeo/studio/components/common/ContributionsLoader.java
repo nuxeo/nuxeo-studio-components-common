@@ -38,6 +38,7 @@ import org.nuxeo.studio.components.common.runtime.ExtractorContext;
  * Load contributions from several sources, depending of Mojo parameters
  */
 public class ContributionsLoader {
+
     protected final ExtractorOptions opts;
 
     protected final ContributionsHolder holder;
@@ -51,9 +52,9 @@ public class ContributionsLoader {
         if (StringUtils.isNotBlank(opts.getJarFile())) {
             // Based on external jarFile
             List<URI> files = Arrays.stream(opts.getJarFile().split(",")) //
-                                       .filter(s -> s.endsWith(".jar"))
+                                    .filter(s -> s.endsWith(".jar"))
                                     .map(s -> new File(s).toURI())
-                                       .collect(Collectors.toList());
+                                    .collect(Collectors.toList());
             ExtractorContext.instance.addExternalSources(files);
 
             files.forEach(this::loadFromJarFile);
@@ -71,7 +72,8 @@ public class ContributionsLoader {
 
         URI uri = URI.create("jar:" + jarFileURI);
         try (FileSystem fs = FileSystems.newFileSystem(uri, new HashMap<>())) {
-            new BundleWalker(fs.getPath("/")).getRegistrationInfos().forEach(holder::load);
+            BundleWalker walker = new BundleWalker(fs.getPath("/"));
+            loadFromWalker(walker, true);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -80,9 +82,17 @@ public class ContributionsLoader {
     protected void loadFromDirectory(String directory) {
         BundleWalker walker = new BundleWalker(directory);
         try {
-            walker.getRegistrationInfos().forEach(holder::load);
+            loadFromWalker(walker, false);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    protected void loadFromWalker(BundleWalker walker, boolean isJarFile) throws IOException {
+        // Load extensions
+        walker.getRegistrationInfos().forEach(holder::load);
+
+        // Load ressources
+        walker.getResourceDescriptors(isJarFile).forEach(holder::load);
     }
 }
