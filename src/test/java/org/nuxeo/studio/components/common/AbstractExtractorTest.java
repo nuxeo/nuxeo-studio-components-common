@@ -26,12 +26,14 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Before;
 import org.nuxeo.studio.components.common.bundle.BundleWalker;
 import org.nuxeo.studio.components.common.bundle.ContributionsHolder;
 import org.nuxeo.studio.components.common.bundle.RegistrationInfo;
+import org.nuxeo.studio.components.common.mapper.descriptors.ResourceDescriptor;
 import org.nuxeo.studio.components.common.runtime.ExtractorContext;
 import org.nuxeo.studio.components.common.serializer.StudioSerializer;
 
@@ -71,9 +73,10 @@ public class AbstractExtractorTest {
         return holder;
     }
 
-    protected void loadResources(String... filenames) {
+    protected ContributionsHolder loadResources(ResourceDescriptor... rd) {
         ContributionsHolder holder = new ContributionsHolder();
-        URL resource = TestHelper.getResource(filenames[0]);
+        Stream.of(rd).forEach(holder::load);
+        return holder;
     }
 
     protected <T> void assertSerialization(String component, Class<T> descriptor, int size, String expectedJson)

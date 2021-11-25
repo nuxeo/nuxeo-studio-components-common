@@ -41,11 +41,14 @@ import org.junit.Test;
 import org.nuxeo.studio.components.common.bundle.BundleWalker;
 import org.nuxeo.studio.components.common.bundle.ContributionsHolder;
 import org.nuxeo.studio.components.common.bundle.RegistrationInfo;
+import org.nuxeo.studio.components.common.mapper.descriptors.CSVResourceDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.DirectoryDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.DocTemplateDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.DocumentTypeDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.EventListenerDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.FacetDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.I18nResourceDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.ImageResourceDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.LifeCycleDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.MailTemplateDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.OpRestBindingDescriptor;
@@ -57,6 +60,7 @@ import org.nuxeo.studio.components.common.mapper.descriptors.PermissionDescripto
 import org.nuxeo.studio.components.common.mapper.descriptors.SchemaBindingDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.VocabularyDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.WorkflowDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.XSDResourceDescriptor;
 import org.nuxeo.studio.components.common.mapper.impl.TypeServiceMapper;
 import org.nuxeo.studio.components.common.runtime.ExtractorContext;
 import org.nuxeo.studio.components.common.serializer.StudioSerializer;
@@ -98,6 +102,14 @@ public class TestSerializer extends AbstractExtractorTest {
     public static final String EXPECTED_JSON_DIRECTORIES = "[\"userDirectory\",\"groupDirectory\"]";
 
     public static final String EXPECTED_JSON_OP_REST_BINDINGS = "[\"Document.AddFacet\",\"p1chain\"]";
+
+    public static final String EXPECTED_JSON_IMAGE_RESOURCE = "[{\"name\":\"img1.png\",\"resourceType\":\"IMAGE\"},{\"name\":\"subfolder/sub_img1.png\",\"resourceType\":\"IMAGE\"}]";
+
+    public static final String EXPECTED_JSON_XSD_RESOURCE = "[{\"name\":\"schema1.xsd\",\"resourceType\":\"XSD\"},{\"name\":\"subfolder/sub_schema1.xsd\",\"resourceType\":\"XSD\"}]";
+
+    public static final String EXPECTED_JSON_CSV_RESOURCE = "[{\"name\":\"voc1.csv\",\"resourceType\":\"CSV\"},{\"name\":\"subfolder/sub_voc1.csv\",\"resourceType\":\"CSV\"}]";
+
+    public static final String EXPECTED_JSON_I18N_RESOURCE = "[{\"name\":\"traduction1.json\",\"resourceType\":\"I18N\"},{\"name\":\"subfolder/sub_traduction1.json\",\"resourceType\":\"I18N\"}]";
 
     @Test
     public void testDoctypeMapper() throws URISyntaxException {
@@ -213,6 +225,46 @@ public class TestSerializer extends AbstractExtractorTest {
         StudioSerializer serializer = new StudioSerializer(holder, opts);
         String result = serializer.serializeDescriptors(EventListenerDescriptor.class);
         assertJsonEquals(EXPECTED_JSON_EVENT, result);
+    }
+
+    @Test
+    public void testImageResourceSerializer() {
+        ContributionsHolder holder = loadResources(new ImageResourceDescriptor("img1.png"),
+                new ImageResourceDescriptor("subfolder/sub_img1.png"));
+
+        StudioSerializer serializer = new StudioSerializer(holder, opts);
+        String result = serializer.serializeDescriptors("images");
+        assertJsonEquals(EXPECTED_JSON_IMAGE_RESOURCE, result);
+    }
+
+    @Test
+    public void testXSDResourceSerializer() {
+        ContributionsHolder holder = loadResources(new XSDResourceDescriptor("schema1.xsd"),
+                new XSDResourceDescriptor("subfolder/sub_schema1.xsd"));
+
+        StudioSerializer serializer = new StudioSerializer(holder, opts);
+        String result = serializer.serializeDescriptors("xsds");
+        assertJsonEquals(EXPECTED_JSON_XSD_RESOURCE, result);
+    }
+
+    @Test
+    public void testCSVResourceSerializer() {
+        ContributionsHolder holder = loadResources(new CSVResourceDescriptor("voc1.csv"),
+                new CSVResourceDescriptor("subfolder/sub_voc1.csv"));
+
+        StudioSerializer serializer = new StudioSerializer(holder, opts);
+        String result = serializer.serializeDescriptors("csvs");
+        assertJsonEquals(EXPECTED_JSON_CSV_RESOURCE, result);
+    }
+
+    @Test
+    public void testI18nResourceSerializer() {
+        ContributionsHolder holder = loadResources(new I18nResourceDescriptor("traduction1.json"),
+                new I18nResourceDescriptor("subfolder/sub_traduction1.json"));
+
+        StudioSerializer serializer = new StudioSerializer(holder, opts);
+        String result = serializer.serializeDescriptors("i18ns");
+        assertJsonEquals(EXPECTED_JSON_I18N_RESOURCE, result);
     }
 
     @Test(expected = RuntimeException.class)
