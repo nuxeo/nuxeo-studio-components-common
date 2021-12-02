@@ -26,6 +26,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.jar.Manifest;
@@ -118,6 +119,7 @@ public class BundleWalker {
             descriptors.addAll(Files.walk(imgResourcesPath)
                                     .filter(Files::isRegularFile)
                                     .map(path -> new ImageResourceDescriptor(getResourceName(imgResourcesPath, path)))
+                                    .sorted(Comparator.comparing(ResourceDescriptor::getName))
                                     .collect(Collectors.toList()));
         }
 
@@ -128,6 +130,7 @@ public class BundleWalker {
             descriptors.addAll(Files.walk(csvResourcesPath)
                                     .filter(Files::isRegularFile)
                                     .map(path -> new CSVResourceDescriptor(getResourceName(csvResourcesPath, path)))
+                                    .sorted(Comparator.comparing(ResourceDescriptor::getName))
                                     .collect(Collectors.toList()));
         }
 
@@ -138,6 +141,7 @@ public class BundleWalker {
             descriptors.addAll(Files.walk(i18nResourcesPath)
                                     .filter(Files::isRegularFile)
                                     .map(path -> new I18nResourceDescriptor(getResourceName(i18nResourcesPath, path)))
+                                    .sorted(Comparator.comparing(ResourceDescriptor::getName))
                                     .collect(Collectors.toList()));
         }
 
@@ -148,6 +152,7 @@ public class BundleWalker {
             descriptors.addAll(Files.walk(xsdResourcesPath)
                                     .filter(Files::isRegularFile)
                                     .map(path -> new XSDResourceDescriptor(getResourceName(xsdResourcesPath, path)))
+                                    .sorted(Comparator.comparing(ResourceDescriptor::getName))
                                     .collect(Collectors.toList()));
         }
 
