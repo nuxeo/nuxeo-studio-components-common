@@ -24,6 +24,11 @@
       <schema name="image_metadata"/>
     </facet>
 
+    <facet name="MyFacet" deprecated="true">
+      <label>My Facet</label>
+      <description>This is a description of my Facet !</description>
+    </facet>
+
     <doctype name="Picture" extends="Document">
       <schema name="common"/>
       <schema name="uid"/>
