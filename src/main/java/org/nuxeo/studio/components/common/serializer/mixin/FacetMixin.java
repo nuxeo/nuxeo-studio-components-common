@@ -19,23 +19,34 @@
 
 package org.nuxeo.studio.components.common.serializer.mixin;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.IOException;
+import java.util.Arrays;
+
+import org.nuxeo.studio.components.common.mapper.descriptors.SchemaDescriptor;
+import org.nuxeo.studio.components.common.serializer.JacksonConverter.StudioJacksonSerializer;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.nuxeo.studio.components.common.mapper.descriptors.SchemaDescriptor;
-import org.nuxeo.studio.components.common.serializer.JacksonConverter.StudioJacksonSerializer;
-
-import java.io.IOException;
-import java.util.Arrays;
 
 public abstract class FacetMixin {
     @JsonProperty(value = "id")
     String name;
 
-    @JsonIgnore
-    Boolean perDocumentQuery;
+    @JsonProperty(value = "label")
+    @JsonInclude(Include.NON_NULL)
+    String label;
+
+    @JsonProperty(value = "description")
+    @JsonInclude(Include.NON_NULL)
+    String description;
+
+    @JsonProperty(value = "deprecated")
+    @JsonInclude(Include.NON_NULL)
+    Boolean deprecated;
 
     @JsonSerialize(using = FacetSchemaSerializer.class)
     SchemaDescriptor[] schemas;

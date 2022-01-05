@@ -31,6 +31,15 @@ public class FacetDescriptor {
     @XNode("@name")
     public String name;
 
+    @XNode("@deprecated")
+    public Boolean deprecated;
+
+    @XNode("label")
+    public String label;
+
+    @XNode("description")
+    public String description;
+
     @XNodeList(value = "schema", type = SchemaDescriptor[].class, componentType = SchemaDescriptor.class)
     public SchemaDescriptor[] schemas;
 

@@ -73,7 +73,7 @@ public class TestSerializer extends AbstractExtractorTest {
 
     public static final String EXPECTED_JSON_OPERATIONS = "[{\"id\":\"Document.MyOperation\",\"aliases\":[],\"signature\":[\"document\",\"document\"],\"category\":\"Others\",\"label\":\"Document.MyOperation\",\"requires\":null,\"since\":\"\",\"description\":\"\",\"params\":[{\"name\":\"dummy\",\"description\":\"\",\"type\":\"string\",\"widget\":null,\"values\":[],\"order\":0,\"required\":true}]}]";
 
-    public static final String EXPECTED_JSON_FACETS = "[{\"id\": \"Picture\", \"schemas\": [\"file\",\"picture\",\"image_metadata\"]}]";
+    public static final String EXPECTED_JSON_FACETS = "[{\"id\": \"Picture\", \"schemas\": [\"file\",\"picture\",\"image_metadata\"]}, {\"id\": \"MyFacet\", \"label\": \"My Facet\", \"description\": \"This is a description of my Facet !\", \"schemas\":[], \"deprecated\": true}]";
 
     public static final String EXPECTED_JSON_PERMISSIONS = "{\"Browse\": \"Browse\", \"ReadProperties\": \"Read properties\", \"ReadChildren\": \"Read children\", \"ReadLifeCycle\": \"Read life cycle\", \"smallCamelCase\": \"Small camel case\"}";
 
@@ -121,7 +121,7 @@ public class TestSerializer extends AbstractExtractorTest {
 
     @Test
     public void testFacetSerializer() throws URISyntaxException {
-        assertSerialization("component-contrib.xml", FacetDescriptor.class, 1, EXPECTED_JSON_FACETS);
+        assertSerialization("component-contrib.xml", FacetDescriptor.class, 2, EXPECTED_JSON_FACETS);
     }
 
     @Test
