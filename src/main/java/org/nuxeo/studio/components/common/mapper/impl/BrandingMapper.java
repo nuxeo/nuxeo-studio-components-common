@@ -1,5 +1,5 @@
 /*
- * (C) Copyright 2017 Nuxeo SA (http://nuxeo.com/) and others.
+ * (C) Copyright 2022 Nuxeo SA (http://nuxeo.com/) and others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,30 +14,22 @@
  * limitations under the License.
  *
  * Contributors:
- *     Arnaud Kervern
- *     Florian BEMATOL
+ *     Florian Bématol
  */
-
 package org.nuxeo.studio.components.common.mapper.impl;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.nuxeo.studio.components.common.mapper.ExtensionMapper;
-import org.nuxeo.studio.components.common.mapper.descriptors.DirectoryDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.BrandingDescriptor;
 
-public class DirectoryMapper extends ExtensionMapper {
-
-    protected static final List<String> TARGETS = Arrays.asList("org.nuxeo.ecm.directory.GenericDirectory",
-            "org.nuxeo.ecm.directory.sql.SQLDirectoryFactory");
-
+public class BrandingMapper extends ExtensionMapper {
     @Override
     public void registerDescriptors() {
-        registerDescriptor("directories", DirectoryDescriptor.class);
+        registerDescriptor("branding", BrandingDescriptor.class);
     }
 
     @Override
     protected boolean accept(String target, String point) {
-        return TARGETS.contains(target) && "directories".equals(point);
+        return target.equals("org.nuxeo.ecm.platform.ui.web.auth.service.PluggableAuthenticationService")
+                && point.equals("loginScreen");
     }
 }

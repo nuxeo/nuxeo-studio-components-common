@@ -41,6 +41,7 @@ import org.junit.Test;
 import org.nuxeo.studio.components.common.bundle.BundleWalker;
 import org.nuxeo.studio.components.common.bundle.ContributionsHolder;
 import org.nuxeo.studio.components.common.bundle.RegistrationInfo;
+import org.nuxeo.studio.components.common.mapper.descriptors.BrandingDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.CSVResourceDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.DirectoryDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.DocTemplateDescriptor;
@@ -58,6 +59,7 @@ import org.nuxeo.studio.components.common.mapper.descriptors.OperationScriptingD
 import org.nuxeo.studio.components.common.mapper.descriptors.PageProviderDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.PermissionDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.SchemaBindingDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.SearchFormDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.VocabularyDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.WorkflowDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.XSDResourceDescriptor;
@@ -110,6 +112,10 @@ public class TestSerializer extends AbstractExtractorTest {
     public static final String EXPECTED_JSON_CSV_RESOURCE = "[{\"name\":\"voc1.csv\",\"resourceType\":\"CSV\"},{\"name\":\"subfolder/sub_voc1.csv\",\"resourceType\":\"CSV\"}]";
 
     public static final String EXPECTED_JSON_I18N_RESOURCE = "[{\"name\":\"traduction1.json\",\"resourceType\":\"I18N\"},{\"name\":\"subfolder/sub_traduction1.json\",\"resourceType\":\"I18N\"}]";
+
+    public static final String EXPECTED_JSON_BRANDING = "{\"isPresent\":true}";
+
+    public static final String EXPECTED_JSON_SEARCH_FORM = "{\"isPresent\":true}";
 
     @Test
     public void testDoctypeMapper() throws URISyntaxException {
@@ -195,6 +201,16 @@ public class TestSerializer extends AbstractExtractorTest {
     public void testOpRestBindingSerializer() throws URISyntaxException {
         assertSerialization("op-rest-binding-contrib.xml", OpRestBindingDescriptor.class, 2,
                 EXPECTED_JSON_OP_REST_BINDINGS);
+    }
+
+    @Test
+    public void testBrandingSerializer() throws URISyntaxException {
+        assertSerialization("studio-extensions.xml", BrandingDescriptor.class, 1, EXPECTED_JSON_BRANDING);
+    }
+
+    @Test
+    public void testSearchFormSerializer() throws URISyntaxException {
+        assertSerialization("studio-extensions.xml", SearchFormDescriptor.class, 1, EXPECTED_JSON_SEARCH_FORM);
     }
 
     @Test
