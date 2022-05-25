@@ -15,6 +15,7 @@
  *
  * Contributors:
  *     Arnaud Kervern
+ *     Florian BEMATOL
  */
 
 package org.nuxeo.studio.components.common.bundle;
@@ -32,6 +33,7 @@ import java.util.function.Predicate;
 import org.nuxeo.studio.components.common.mapper.MappersManager;
 import org.nuxeo.studio.components.common.mapper.descriptors.ResourceDescriptor;
 import org.nuxeo.studio.components.common.mapper.impl.AutomationMapper;
+import org.nuxeo.studio.components.common.mapper.impl.BrandingMapper;
 import org.nuxeo.studio.components.common.mapper.impl.CSVResourcesMapper;
 import org.nuxeo.studio.components.common.mapper.impl.DirectoryMapper;
 import org.nuxeo.studio.components.common.mapper.impl.DocTemplateMapper;
@@ -43,6 +45,7 @@ import org.nuxeo.studio.components.common.mapper.impl.MailTemplateMapper;
 import org.nuxeo.studio.components.common.mapper.impl.OpRestBindingMapper;
 import org.nuxeo.studio.components.common.mapper.impl.PageProviderMapper;
 import org.nuxeo.studio.components.common.mapper.impl.PermissionsMapper;
+import org.nuxeo.studio.components.common.mapper.impl.SearchFormMapper;
 import org.nuxeo.studio.components.common.mapper.impl.TypeServiceMapper;
 import org.nuxeo.studio.components.common.mapper.impl.VocabularyMapper;
 import org.nuxeo.studio.components.common.mapper.impl.WorkflowMapper;
@@ -79,7 +82,9 @@ public class ContributionsHolder {
                            .add(new ImageResourcesMapper())
                            .add(new CSVResourcesMapper())
                            .add(new I18nResourcesMapper())
-                           .add(new XSDResourcesMapper()));
+                           .add(new XSDResourcesMapper())
+                           .add(new BrandingMapper())
+                           .add(new SearchFormMapper()));
     }
 
     public ContributionsHolder(MappersManager manager) {

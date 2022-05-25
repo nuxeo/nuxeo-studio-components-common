@@ -8,10 +8,12 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.nuxeo.studio.components.common.bundle.ContributionsHolder;
+import org.nuxeo.studio.components.common.mapper.descriptors.BrandingDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.DirectoryDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.OpRestBindingDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.PageProviderDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.SchemaBindingDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.SearchFormDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.VocabularyDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.WorkflowDescriptor;
 
@@ -46,5 +48,11 @@ public class TestStudioProjectExtraction extends AbstractExtractorTest {
 
         List<OpRestBindingDescriptor> wsfiltersContribs = holder.getContributions(OpRestBindingDescriptor.class);
         assertThat(wsfiltersContribs).hasSize(2);
+
+        List<BrandingDescriptor> brandingContribs = holder.getContributions(BrandingDescriptor.class);
+        assertThat(brandingContribs).hasSize(1);
+
+        List<SearchFormDescriptor> searchFormContribs = holder.getContributions(SearchFormDescriptor.class);
+        assertThat(searchFormContribs).hasSize(1);
     }
 }

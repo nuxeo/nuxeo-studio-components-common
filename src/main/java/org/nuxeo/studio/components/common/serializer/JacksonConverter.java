@@ -15,6 +15,7 @@
  *
  * Contributors:
  *     Arnaud Kervern
+ *     Florian BEMATOL
  */
 
 package org.nuxeo.studio.components.common.serializer;
@@ -31,6 +32,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nuxeo.studio.components.common.ExtractorOptions;
+import org.nuxeo.studio.components.common.mapper.descriptors.BrandingDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.DirectoryDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.DocTemplateDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.DocumentTypeDescriptor;
@@ -41,6 +43,7 @@ import org.nuxeo.studio.components.common.mapper.descriptors.MailTemplateDescrip
 import org.nuxeo.studio.components.common.mapper.descriptors.PageProviderDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.PermissionDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.OpRestBindingDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.SearchFormDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.WorkflowDescriptor;
 import org.nuxeo.studio.components.common.serializer.adapter.DefaultAdapter;
 import org.nuxeo.studio.components.common.serializer.adapter.DirectoryAdapter;
@@ -52,6 +55,7 @@ import org.nuxeo.studio.components.common.serializer.adapter.SerializerAdapter;
 import org.nuxeo.studio.components.common.serializer.adapter.VocabularyAdapter;
 import org.nuxeo.studio.components.common.serializer.adapter.automation.OperationDocumentation;
 import org.nuxeo.studio.components.common.serializer.adapter.schema.Schema;
+import org.nuxeo.studio.components.common.serializer.mixin.BrandingMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.DirectoryMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.DocTemplateMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.DocTypeMixin;
@@ -64,6 +68,7 @@ import org.nuxeo.studio.components.common.serializer.mixin.PageProviderMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.PermissionMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.SchemaMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.OpRestBindingMixin;
+import org.nuxeo.studio.components.common.serializer.mixin.SearchFormMixin;
 import org.nuxeo.studio.components.common.serializer.mixin.WorkflowMixin;
 
 import com.fasterxml.jackson.core.JsonEncoding;
@@ -109,6 +114,8 @@ public class JacksonConverter {
         registerMixin(PageProviderDescriptor.class, PageProviderMixin.class);
         registerMixin(DirectoryDescriptor.class, DirectoryMixin.class);
         registerMixin(OpRestBindingDescriptor.class, OpRestBindingMixin.class);
+        registerMixin(BrandingDescriptor.class, BrandingMixin.class);
+        registerMixin(SearchFormDescriptor.class, SearchFormMixin.class);
     }
 
     public static JacksonConverter instance() {
