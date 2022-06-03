@@ -19,20 +19,20 @@
 
 package org.nuxeo.studio.components.common.mapper.descriptors;
 
-import org.nuxeo.studio.components.common.mapper.xmap.annotation.XNode;
-import org.nuxeo.studio.components.common.mapper.xmap.annotation.XObject;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.nuxeo.studio.components.common.mapper.xmap.annotation.XNode;
+import org.nuxeo.studio.components.common.mapper.xmap.annotation.XObject;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 /**
  * Descriptor for a life cycle extension.
  */
-@XObject(value = "lifecycle", order = {"@name"})
+@XObject(value = "lifecycle", order = { "@name" })
 public class LifeCycleDescriptor {
 
     private static final Log log = LogFactory.getLog(LifeCycleDescriptor.class);
@@ -52,6 +52,9 @@ public class LifeCycleDescriptor {
     @XNode("@defaultInitial")
     private String defaultInitialStateName;
 
+    @XNode("@enabled")
+    private Boolean enabled = true;
+
     @XNode("description")
     private String description;
 
@@ -64,6 +67,10 @@ public class LifeCycleDescriptor {
     private Element transitions;
 
     private List<String> computedTransitions;
+
+    public boolean isEnabled() {
+        return enabled;
+    }
 
     public String getDescription() {
         return description;

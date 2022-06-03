@@ -21,23 +21,22 @@ package org.nuxeo.studio.components.common.serializer.mixin;
 
 import java.io.IOException;
 
-import org.nuxeo.studio.components.common.mapper.descriptors.BrandingDescriptor;
-import org.nuxeo.studio.components.common.mapper.descriptors.DirectoryDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.LoginScreenDescriptor;
 import org.nuxeo.studio.components.common.serializer.JacksonConverter.StudioJacksonSerializer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-@JsonSerialize(using = BrandingMixin.BrandingSerializer.class)
-public abstract class BrandingMixin {
+@JsonSerialize(using = LoginScreenMixin.LoginScreenSerializer.class)
+public abstract class LoginScreenMixin {
 
-    public static class BrandingSerializer extends StudioJacksonSerializer<BrandingDescriptor> {
+    public static class LoginScreenSerializer extends StudioJacksonSerializer<LoginScreenDescriptor> {
 
         private static final long serialVersionUID = 1L;
 
         @Override
-        public void serialize(BrandingDescriptor value, JsonGenerator gen, SerializerProvider provider)
+        public void serialize(LoginScreenDescriptor value, JsonGenerator gen, SerializerProvider provider)
                 throws IOException {
             gen.writeBooleanField("isPresent", true);
         }

@@ -53,11 +53,12 @@ public class TestHolder extends AbstractExtractorTest {
         // Add AutomationMapper
         manager.add(new AutomationMapper());
         String[] registeredTargets = manager.getRegisteredTargets();
-        assertEquals(1, registeredTargets.length);
-        assertEquals("operations", registeredTargets[0]);
+        assertEquals(2, registeredTargets.length);
+        assertEquals("event_handlers", registeredTargets[0]);
+        assertEquals("operations", registeredTargets[1]);
 
         // Add TypeServiceMapper with 3 available targets
         manager.add(new TypeServiceMapper());
-        assertEquals(4, manager.getRegisteredTargets().length);
+        assertEquals(5, manager.getRegisteredTargets().length);
     }
 }

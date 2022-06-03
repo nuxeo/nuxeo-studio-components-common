@@ -16,14 +16,21 @@
  * Contributors:
  *     Florian BEMATOL
  */
-
 package org.nuxeo.studio.components.common.mapper.descriptors;
 
 import org.nuxeo.studio.components.common.mapper.xmap.annotation.XNode;
 import org.nuxeo.studio.components.common.mapper.xmap.annotation.XObject;
 
-@XObject(value = "loginScreenConfig")
-public class BrandingDescriptor {
+@XObject("handler")
+public class EventHandlerDescriptor {
+
+    @XNode("@id")
+    public String id;
+
+    @XNode("@chainId")
+    public String chainId;
+
+    @XNode("@enabled")
+    public Boolean enabled = true;
 
 }
-

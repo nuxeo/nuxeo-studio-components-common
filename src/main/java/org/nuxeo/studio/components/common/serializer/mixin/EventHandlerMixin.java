@@ -1,5 +1,5 @@
 /*
- * (C) Copyright 2017 Nuxeo SA (http://nuxeo.com/) and others.
+ * (C) Copyright 2022 Nuxeo SA (http://nuxeo.com/) and others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,43 +14,37 @@
  * limitations under the License.
  *
  * Contributors:
- *     Arnaud Kervern
+ *     Florian BEMATOL
  */
 
 package org.nuxeo.studio.components.common.serializer.mixin;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
-import org.nuxeo.studio.components.common.mapper.descriptors.DocumentTypeDescriptor;
-import org.nuxeo.studio.components.common.serializer.JacksonConverter;
+import org.nuxeo.studio.components.common.mapper.descriptors.EventHandlerDescriptor;
+import org.nuxeo.studio.components.common.serializer.JacksonConverter.StudioJacksonSerializer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-@JsonSerialize(using = DocTypeMixin.DocTypeSerializer.class)
-public abstract class DocTypeMixin {
-    public static class DocTypeSerializer extends JacksonConverter.StudioJacksonSerializer<DocumentTypeDescriptor> {
+@JsonSerialize(using = EventHandlerMixin.EventHandlerSerializer.class)
+public abstract class EventHandlerMixin {
+
+    public static class EventHandlerSerializer extends StudioJacksonSerializer<EventHandlerDescriptor> {
 
         private static final long serialVersionUID = 1L;
 
         @Override
-        public void serialize(DocumentTypeDescriptor value, JsonGenerator gen, SerializerProvider provider)
+        public void serialize(EventHandlerDescriptor value, JsonGenerator gen, SerializerProvider provider)
                 throws IOException {
             Map<String, Object> obj = new HashMap<>();
+            obj.put("id", value.id);
+            obj.put("chainId", value.chainId);
             obj.put("enabled", value.enabled);
-            if (StringUtils.isNotBlank(value.superTypeName)) {
-                obj.put("parent", value.superTypeName);
-            }
-            obj.put("schemas", Arrays.stream(value.schemas).map(s -> s.name).collect(Collectors.toList()));
-            obj.put("facets", value.facets);
-
-            gen.writeObjectField(value.name, obj);
+            gen.writeObject(obj);
         }
     }
 }

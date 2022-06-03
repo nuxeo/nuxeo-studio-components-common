@@ -19,23 +19,25 @@
 
 package org.nuxeo.studio.components.common.mapper.impl;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.nuxeo.studio.components.common.mapper.ExtensionMapper;
+import org.nuxeo.studio.components.common.mapper.descriptors.EventHandlerDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.OperationChainDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.OperationDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.OperationScriptingDescriptor;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class AutomationMapper extends ExtensionMapper {
 
-    protected static final List<String> EXTENSIONS = Arrays.asList("operations", "chains");
+    protected static final List<String> EXTENSIONS = Arrays.asList("operations", "chains", "event-handlers");
 
     @Override
     public void registerDescriptors() {
         registerDescriptor("operations", OperationChainDescriptor.class);
         registerDescriptor("operations", OperationDescriptor.class);
         registerDescriptor("operations", OperationScriptingDescriptor.class);
+        registerDescriptor("event_handlers", EventHandlerDescriptor.class);
     }
 
     @Override

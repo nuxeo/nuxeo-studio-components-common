@@ -14,22 +14,20 @@
  * limitations under the License.
  *
  * Contributors:
- *     Florian Bématol
+ *     Florian BEMATOL
  */
-package org.nuxeo.studio.components.common.mapper.impl;
+package org.nuxeo.studio.components.common.mapper.descriptors;
 
-import org.nuxeo.studio.components.common.mapper.ExtensionMapper;
-import org.nuxeo.studio.components.common.mapper.descriptors.BrandingDescriptor;
+import org.nuxeo.studio.components.common.mapper.xmap.annotation.XNode;
+import org.nuxeo.studio.components.common.mapper.xmap.annotation.XObject;
 
-public class BrandingMapper extends ExtensionMapper {
-    @Override
-    public void registerDescriptors() {
-        registerDescriptor("branding", BrandingDescriptor.class);
-    }
+@XObject("factoryBinding")
+public class StructureTemplateDescriptor {
 
-    @Override
-    protected boolean accept(String target, String point) {
-        return target.equals("org.nuxeo.ecm.platform.ui.web.auth.service.PluggableAuthenticationService")
-                && point.equals("loginScreen");
-    }
+    @XNode("@name")
+    public String name;
+
+    @XNode("@enabled")
+    public Boolean enabled = true;
+
 }
