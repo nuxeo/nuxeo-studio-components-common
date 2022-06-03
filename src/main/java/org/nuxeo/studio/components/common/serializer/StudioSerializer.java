@@ -40,7 +40,7 @@ public class StudioSerializer {
 
     private static final List<String> asArray = Arrays.asList("facets", "operations", "vocabularies", "mail_templates",
             "doc_templates", "workflows", "page_providers", "directories", "op_rest_bindings", "images", "csvs", "xsds",
-            "i18ns");
+            "i18ns", "event_handlers");
 
     private ContributionsHolder holder;
 

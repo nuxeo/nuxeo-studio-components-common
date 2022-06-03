@@ -4,7 +4,7 @@
 
     <documentation>Nuxeo core default life cycle definition.</documentation>
 
-    <lifecycle name="default" defaultInitial="project">
+    <lifecycle name="default" defaultInitial="project" enabled="true">
       <transitions>
         <transition name="approve" destinationState="approved">
           <description>Approve the content</description>

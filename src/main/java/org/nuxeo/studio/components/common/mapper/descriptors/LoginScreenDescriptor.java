@@ -1,5 +1,5 @@
 /*
- * (C) Copyright 2021 Nuxeo SA (http://nuxeo.com/) and others.
+ * (C) Copyright 2022 Nuxeo SA (http://nuxeo.com/) and others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,23 +14,14 @@
  * limitations under the License.
  *
  * Contributors:
- *     Yannis JULIENNE
+ *     Florian BEMATOL
  */
 
 package org.nuxeo.studio.components.common.mapper.descriptors;
 
-import org.nuxeo.studio.components.common.mapper.xmap.annotation.XNode;
 import org.nuxeo.studio.components.common.mapper.xmap.annotation.XObject;
 
-@XObject("directory")
-public class DirectoryDescriptor {
+@XObject(value = "loginScreenConfig")
+public class LoginScreenDescriptor {
 
-    @XNode("@name")
-    public String name;
-
-    @XNode("@extends")
-    public String extendz;
-
-    @XNode("@enabled")
-    public Boolean isEnabled;
 }

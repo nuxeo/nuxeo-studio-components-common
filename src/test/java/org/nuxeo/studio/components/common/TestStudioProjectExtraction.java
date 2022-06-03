@@ -8,12 +8,16 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.nuxeo.studio.components.common.bundle.ContributionsHolder;
-import org.nuxeo.studio.components.common.mapper.descriptors.BrandingDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.DirectoryDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.DocumentTypeDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.EventHandlerDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.LifeCycleDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.LoginScreenDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.OpRestBindingDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.PageProviderDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.SchemaBindingDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.SearchFormDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.StructureTemplateDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.VocabularyDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.WorkflowDescriptor;
 
@@ -49,10 +53,23 @@ public class TestStudioProjectExtraction extends AbstractExtractorTest {
         List<OpRestBindingDescriptor> wsfiltersContribs = holder.getContributions(OpRestBindingDescriptor.class);
         assertThat(wsfiltersContribs).hasSize(2);
 
-        List<BrandingDescriptor> brandingContribs = holder.getContributions(BrandingDescriptor.class);
+        List<LoginScreenDescriptor> brandingContribs = holder.getContributions(LoginScreenDescriptor.class);
         assertThat(brandingContribs).hasSize(1);
 
         List<SearchFormDescriptor> searchFormContribs = holder.getContributions(SearchFormDescriptor.class);
         assertThat(searchFormContribs).hasSize(1);
+
+        List<DocumentTypeDescriptor> documentTypeContribs = holder.getContributions(DocumentTypeDescriptor.class);
+        assertThat(documentTypeContribs).hasSize(2);
+
+        List<EventHandlerDescriptor> eventHandlerContribs = holder.getContributions(EventHandlerDescriptor.class);
+        assertThat(eventHandlerContribs).hasSize(2);
+
+        List<LifeCycleDescriptor> lifeCycleContribs = holder.getContributions(LifeCycleDescriptor.class);
+        assertThat(lifeCycleContribs).hasSize(1);
+
+        List<StructureTemplateDescriptor> structureTemplateContribs = holder.getContributions(
+                StructureTemplateDescriptor.class);
+        assertThat(structureTemplateContribs).hasSize(2);
     }
 }

@@ -16,14 +16,18 @@
  * Contributors:
  *     Florian BEMATOL
  */
-
 package org.nuxeo.studio.components.common.mapper.descriptors;
 
 import org.nuxeo.studio.components.common.mapper.xmap.annotation.XNode;
 import org.nuxeo.studio.components.common.mapper.xmap.annotation.XObject;
 
-@XObject(value = "loginScreenConfig")
-public class BrandingDescriptor {
+@XObject("factoryBinding")
+public class StructureTemplateDescriptor {
+
+    @XNode("@name")
+    public String name;
+
+    @XNode("@enabled")
+    public Boolean enabled = true;
 
 }
-
