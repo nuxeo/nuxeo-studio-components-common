@@ -52,6 +52,9 @@ public class DocumentTypeDescriptor {
     @XNode("@append")
     public boolean append = false;
 
+    @XNode("@enabled")
+    public Boolean enabled = true;
+
     @XNodeList(value = "subtypes/type", type = String[].class, componentType = String.class)
     public String[] subtypes = new String[0];
 

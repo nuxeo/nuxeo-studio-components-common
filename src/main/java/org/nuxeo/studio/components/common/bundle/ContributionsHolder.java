@@ -33,7 +33,6 @@ import java.util.function.Predicate;
 import org.nuxeo.studio.components.common.mapper.MappersManager;
 import org.nuxeo.studio.components.common.mapper.descriptors.ResourceDescriptor;
 import org.nuxeo.studio.components.common.mapper.impl.AutomationMapper;
-import org.nuxeo.studio.components.common.mapper.impl.BrandingMapper;
 import org.nuxeo.studio.components.common.mapper.impl.CSVResourcesMapper;
 import org.nuxeo.studio.components.common.mapper.impl.DirectoryMapper;
 import org.nuxeo.studio.components.common.mapper.impl.DocTemplateMapper;
@@ -41,11 +40,13 @@ import org.nuxeo.studio.components.common.mapper.impl.EventMapper;
 import org.nuxeo.studio.components.common.mapper.impl.I18nResourcesMapper;
 import org.nuxeo.studio.components.common.mapper.impl.ImageResourcesMapper;
 import org.nuxeo.studio.components.common.mapper.impl.LifeCycleMapper;
+import org.nuxeo.studio.components.common.mapper.impl.LoginScreenMapper;
 import org.nuxeo.studio.components.common.mapper.impl.MailTemplateMapper;
 import org.nuxeo.studio.components.common.mapper.impl.OpRestBindingMapper;
 import org.nuxeo.studio.components.common.mapper.impl.PageProviderMapper;
 import org.nuxeo.studio.components.common.mapper.impl.PermissionsMapper;
 import org.nuxeo.studio.components.common.mapper.impl.SearchFormMapper;
+import org.nuxeo.studio.components.common.mapper.impl.StructureTemplateMapper;
 import org.nuxeo.studio.components.common.mapper.impl.TypeServiceMapper;
 import org.nuxeo.studio.components.common.mapper.impl.VocabularyMapper;
 import org.nuxeo.studio.components.common.mapper.impl.WorkflowMapper;
@@ -83,8 +84,9 @@ public class ContributionsHolder {
                            .add(new CSVResourcesMapper())
                            .add(new I18nResourcesMapper())
                            .add(new XSDResourcesMapper())
-                           .add(new BrandingMapper())
-                           .add(new SearchFormMapper()));
+                           .add(new LoginScreenMapper())
+                           .add(new SearchFormMapper())
+                           .add(new StructureTemplateMapper()));
     }
 
     public ContributionsHolder(MappersManager manager) {

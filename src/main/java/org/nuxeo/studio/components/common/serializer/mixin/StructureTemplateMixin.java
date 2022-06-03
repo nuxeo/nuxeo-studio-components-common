@@ -1,5 +1,5 @@
 /*
- * (C) Copyright 2017 Nuxeo SA (http://nuxeo.com/) and others.
+ * (C) Copyright 2022 Nuxeo SA (http://nuxeo.com/) and others.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  * Contributors:
- *     Arnaud Kervern
+ *     Florian BEMATOL
  */
 
 package org.nuxeo.studio.components.common.serializer.mixin;
@@ -23,28 +23,26 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.nuxeo.studio.components.common.mapper.descriptors.LifeCycleDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.StructureTemplateDescriptor;
 import org.nuxeo.studio.components.common.serializer.JacksonConverter.StudioJacksonSerializer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-@JsonSerialize(using = LifeCycleMixin.LifeCycleSerializer.class)
-public abstract class LifeCycleMixin {
-    public static class LifeCycleSerializer extends StudioJacksonSerializer<LifeCycleDescriptor> {
+@JsonSerialize(using = StructureTemplateMixin.LifeCycleSerializer.class)
+public abstract class StructureTemplateMixin {
+    public static class LifeCycleSerializer extends StudioJacksonSerializer<StructureTemplateDescriptor> {
 
         private static final long serialVersionUID = 1L;
 
         @Override
-        public void serialize(LifeCycleDescriptor value, JsonGenerator gen, SerializerProvider provider)
+        public void serialize(StructureTemplateDescriptor value, JsonGenerator gen, SerializerProvider provider)
                 throws IOException {
-            Map<String, Object> lifecycle = new HashMap<>();
-            lifecycle.put("enabled", value.isEnabled());
-            lifecycle.put("states", value.getStates());
-            lifecycle.put("transitions", value.getTransitions());
+            Map<String, Object> structureTemplate = new HashMap<>();
+            structureTemplate.put("enabled", value.enabled);
 
-            gen.writeObjectField(value.getName(), lifecycle);
+            gen.writeObjectField(value.name, structureTemplate);
         }
     }
 }

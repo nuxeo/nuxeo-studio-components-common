@@ -41,16 +41,17 @@ import org.junit.Test;
 import org.nuxeo.studio.components.common.bundle.BundleWalker;
 import org.nuxeo.studio.components.common.bundle.ContributionsHolder;
 import org.nuxeo.studio.components.common.bundle.RegistrationInfo;
-import org.nuxeo.studio.components.common.mapper.descriptors.BrandingDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.CSVResourceDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.DirectoryDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.DocTemplateDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.DocumentTypeDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.EventHandlerDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.EventListenerDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.FacetDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.I18nResourceDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.ImageResourceDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.LifeCycleDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.LoginScreenDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.MailTemplateDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.OpRestBindingDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.OperationChainDescriptor;
@@ -60,6 +61,7 @@ import org.nuxeo.studio.components.common.mapper.descriptors.PageProviderDescrip
 import org.nuxeo.studio.components.common.mapper.descriptors.PermissionDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.SchemaBindingDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.SearchFormDescriptor;
+import org.nuxeo.studio.components.common.mapper.descriptors.StructureTemplateDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.VocabularyDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.WorkflowDescriptor;
 import org.nuxeo.studio.components.common.mapper.descriptors.XSDResourceDescriptor;
@@ -79,13 +81,13 @@ public class TestSerializer extends AbstractExtractorTest {
 
     public static final String EXPECTED_JSON_PERMISSIONS = "{\"Browse\": \"Browse\", \"ReadProperties\": \"Read properties\", \"ReadChildren\": \"Read children\", \"ReadLifeCycle\": \"Read life cycle\", \"smallCamelCase\": \"Small camel case\"}";
 
-    public static final String EXPECTED_JSON_LIFECYCLES = "{\"default\": {\"states\": [\"project\", \"approved\", \"obsolete\", \"deleted\"],\"transitions\": [\"approve\", \"obsolete\", \"delete\", \"undelete\", \"backToProject\"]}}";
+    public static final String EXPECTED_JSON_LIFECYCLES = "{\"default\": {\"states\": [\"project\", \"approved\", \"obsolete\", \"deleted\"],\"transitions\": [\"approve\", \"obsolete\", \"delete\", \"undelete\", \"backToProject\"], \"enabled\":true}}";
 
     public static final String EXPECTED_JSON_EVENT = "{\"myFirstEvent\": \"My first event\", \"my_second-event\": \"My second event\"}";
 
     public static final String EXPECTED_JSON_SCHEMA = "{\"dublincore\":{\"@prefix\":\"dc\",\"description\":\"string\",\"created\":\"date\",\"coverage\":\"string\",\"title\":\"string\",\"complex\":{\"fields\":{\"mime-type\":\"string\",\"data\":\"binary\",\"name\":\"string\",\"length\":\"long\",\"digest\":\"string\",\"encoding\":\"string\"},\"type\":\"complex\"},\"modified\":\"date\",\"nature\":\"string\",\"lastContributor\":\"string\",\"content\":\"blob\",\"source\":\"string\",\"publisher\":\"string\"},\"simpletype\":{\"@prefix\":\"st\",\"title\":\"string\",\"description\":\"string\",\"coverage\":\"string\"}}";
 
-    public static final String EXPECTED_JSON_DOCTYPE = "{\"File\": {\"parent\":\"Document\",\"schemas\":[\"common\",\"file\",\"dublincore\",\"uid\"],\"facets\":[\"Downloadable\",\"Versionable\"]}}";
+    public static final String EXPECTED_JSON_DOCTYPE = "{\"File\": {\"parent\":\"Document\",\"schemas\":[\"common\",\"file\",\"dublincore\",\"uid\"],\"facets\":[\"Downloadable\",\"Versionable\"], \"enabled\": true}}";
 
     public static final String EXPECTED_JSON_CHAIN = "[{\"id\":\"HelloWorldOperationChain\",\"aliases\":[],\"signature\":[\"documents\",\"documents\",\"documents\",\"document\",\"documents\",\"blob\",\"documents\",\"bloblist\",\"documents\",\"void\",\"document\",\"documents\",\"document\",\"document\",\"document\",\"blob\",\"document\",\"bloblist\",\"document\",\"void\",\"blob\",\"documents\",\"blob\",\"document\",\"blob\",\"blob\",\"blob\",\"bloblist\",\"blob\",\"void\",\"bloblist\",\"documents\",\"bloblist\",\"document\",\"bloblist\",\"blob\",\"bloblist\",\"bloblist\",\"bloblist\",\"void\",\"void\",\"documents\",\"void\",\"document\",\"void\",\"blob\",\"void\",\"bloblist\",\"void\",\"void\"],\"category\":\"Chain\",\"label\":\"HelloWorldOperationChain\",\"requires\":null,\"since\":\"\",\"description\":null,\"params\":[]},{\"id\":\"dummyMail\",\"aliases\":[],\"signature\":[\"documents\",\"documents\",\"documents\",\"document\",\"documents\",\"blob\",\"documents\",\"bloblist\",\"documents\",\"void\",\"document\",\"documents\",\"document\",\"document\",\"document\",\"blob\",\"document\",\"bloblist\",\"document\",\"void\",\"blob\",\"documents\",\"blob\",\"document\",\"blob\",\"blob\",\"blob\",\"bloblist\",\"blob\",\"void\",\"bloblist\",\"documents\",\"bloblist\",\"document\",\"bloblist\",\"blob\",\"bloblist\",\"bloblist\",\"bloblist\",\"void\",\"void\",\"documents\",\"void\",\"document\",\"void\",\"blob\",\"void\",\"bloblist\",\"void\",\"void\"],\"category\":\"Chain\",\"label\":\"dummyMail\",\"requires\":null,\"since\":\"\",\"description\":null,\"params\":[]}]";
 
@@ -113,9 +115,13 @@ public class TestSerializer extends AbstractExtractorTest {
 
     public static final String EXPECTED_JSON_I18N_RESOURCE = "[{\"name\":\"traduction1.json\",\"resourceType\":\"I18N\"},{\"name\":\"subfolder/sub_traduction1.json\",\"resourceType\":\"I18N\"}]";
 
-    public static final String EXPECTED_JSON_BRANDING = "{\"isPresent\":true}";
+    public static final String EXPECTED_JSON_LOGIN_SCREEN = "{\"isPresent\":true}";
 
     public static final String EXPECTED_JSON_SEARCH_FORM = "{\"isPresent\":true}";
+
+    public static final String EXPECTED_JSON_EVENT_HANDLER = "[{\"id\":\"aa\", \"enabled\":false}, {\"id\":\"bb\", \"enabled\":true}]";
+
+    public static final String EXPECTED_JSON_STRUCTURE_TEMPLATE = "{\"DomainFactory\":{\"enabled\":true},\"RootFactory\":{\"enabled\":false}}";
 
     @Test
     public void testDoctypeMapper() throws URISyntaxException {
@@ -204,13 +210,24 @@ public class TestSerializer extends AbstractExtractorTest {
     }
 
     @Test
-    public void testBrandingSerializer() throws URISyntaxException {
-        assertSerialization("studio-extensions.xml", BrandingDescriptor.class, 1, EXPECTED_JSON_BRANDING);
+    public void testLoginScreenSerializer() throws URISyntaxException {
+        assertSerialization("studio-extensions.xml", LoginScreenDescriptor.class, 1, EXPECTED_JSON_LOGIN_SCREEN);
     }
 
     @Test
     public void testSearchFormSerializer() throws URISyntaxException {
         assertSerialization("studio-extensions.xml", SearchFormDescriptor.class, 1, EXPECTED_JSON_SEARCH_FORM);
+    }
+
+    @Test
+    public void testEventHandlerSerializer() throws URISyntaxException {
+        assertSerialization("studio-extensions.xml", EventHandlerDescriptor.class, 2, EXPECTED_JSON_EVENT_HANDLER);
+    }
+
+    @Test
+    public void testStructureTemplateSerializer() throws URISyntaxException {
+        assertSerialization("studio-extensions.xml", StructureTemplateDescriptor.class, 2,
+                EXPECTED_JSON_STRUCTURE_TEMPLATE);
     }
 
     @Test
