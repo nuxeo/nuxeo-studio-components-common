@@ -18,18 +18,18 @@
  */
 package org.nuxeo.studio.components.common.mapper.descriptors;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.nuxeo.studio.components.common.mapper.xmap.annotation.XContent;
 import org.nuxeo.studio.components.common.mapper.xmap.annotation.XNode;
 import org.nuxeo.studio.components.common.mapper.xmap.annotation.XNodeList;
 import org.nuxeo.studio.components.common.mapper.xmap.annotation.XNodeMap;
 import org.nuxeo.studio.components.common.mapper.xmap.annotation.XObject;
-import org.nuxeo.studio.components.common.serializer.adapter.automation.OperationDocumentation;
 import org.nuxeo.studio.components.common.serializer.adapter.automation.Constants;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.nuxeo.studio.components.common.serializer.adapter.automation.OperationDocumentation;
 
 /**
  * @author <a href="mailto:bs@nuxeo.com">Bogdan Stefanescu</a>
@@ -42,6 +42,9 @@ public class OperationChainDescriptor {
 
     @XNode("@replace")
     protected boolean replace = true;
+
+    @XNode("@enabled")
+    public Boolean enabled = true;
 
     @XNode("description")
     protected String description;

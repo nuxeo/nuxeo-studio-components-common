@@ -1,6 +1,6 @@
 <component name="org.nuxeo.extractor.foo.scripting" version="1.0">
   <extension target="org.nuxeo.automation.scripting.internals.AutomationScriptingComponent" point="operation">
-    <scriptedOperation id="Scripting.HelloWorld">
+    <scriptedOperation id="Scripting.HelloWorld" enabled="false">
       <inputType>string</inputType>
       <outputType>string</outputType>
       <param name="lang" type="string"/>

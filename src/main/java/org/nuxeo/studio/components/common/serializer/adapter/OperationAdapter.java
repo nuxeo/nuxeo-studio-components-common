@@ -29,6 +29,7 @@ public class OperationAdapter implements SerializerAdapter<OperationDescriptor, 
     public OperationDocumentation adapt(OperationDescriptor src) {
         OperationReader or = OperationReader.read(src.type);
         OperationDocumentation doc = new OperationDocumentation(or.getId());
+        doc.enabled = true;
         doc.aliases = or.getAliases();
         doc.category = or.getCategory();
         doc.label = or.getLabel();

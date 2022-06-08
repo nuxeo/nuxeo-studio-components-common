@@ -28,6 +28,7 @@ public class OperationScriptingAdapter
     @Override
     public OperationDocumentation adapt(OperationScriptingDescriptor desc) {
         OperationDocumentation doc = new OperationDocumentation(desc.getId());
+        doc.enabled = desc.enabled;
         doc.label = desc.getId();
         doc.category = desc.getCategory();
         doc.description = desc.getDescription();

@@ -18,19 +18,21 @@
  */
 package org.nuxeo.studio.components.common.serializer.adapter.automation;
 
+import java.io.Serializable;
+import java.util.Arrays;
+
 import org.nuxeo.studio.components.common.mapper.descriptors.OperationChainDescriptor;
 import org.nuxeo.studio.components.common.mapper.xmap.annotation.XNode;
 import org.nuxeo.studio.components.common.mapper.xmap.annotation.XNodeList;
 import org.nuxeo.studio.components.common.mapper.xmap.annotation.XObject;
-
-import java.io.Serializable;
-import java.util.Arrays;
 
 public class OperationDocumentation implements Comparable<OperationDocumentation>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
     public String id;
+
+    public Boolean enabled;
 
     public String[] aliases;
 
