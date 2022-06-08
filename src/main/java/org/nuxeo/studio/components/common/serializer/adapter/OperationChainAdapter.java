@@ -19,14 +19,14 @@
 
 package org.nuxeo.studio.components.common.serializer.adapter;
 
-import org.apache.commons.lang3.StringUtils;
-import org.nuxeo.studio.components.common.mapper.descriptors.OperationChainDescriptor;
-import org.nuxeo.studio.components.common.serializer.adapter.automation.OperationDocumentation;
-import org.nuxeo.studio.components.common.serializer.adapter.automation.Constants;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.nuxeo.studio.components.common.mapper.descriptors.OperationChainDescriptor;
+import org.nuxeo.studio.components.common.serializer.adapter.automation.Constants;
+import org.nuxeo.studio.components.common.serializer.adapter.automation.OperationDocumentation;
 
 public class OperationChainAdapter implements SerializerAdapter<OperationChainDescriptor, OperationDocumentation> {
     /**
@@ -38,7 +38,8 @@ public class OperationChainAdapter implements SerializerAdapter<OperationChainDe
     static {
         List<String> signatures = new ArrayList<>();
 
-        List<String> possibleValues = Arrays.asList(Constants.T_DOCUMENTS, Constants.T_DOCUMENT, Constants.T_BLOB, Constants.T_BLOBS, Constants.T_VOID);
+        List<String> possibleValues = Arrays.asList(Constants.T_DOCUMENTS, Constants.T_DOCUMENT, Constants.T_BLOB,
+                Constants.T_BLOBS, Constants.T_VOID);
         possibleValues.forEach(inputType -> possibleValues.forEach(outputType -> {
             signatures.add(inputType);
             signatures.add(outputType);
@@ -50,6 +51,7 @@ public class OperationChainAdapter implements SerializerAdapter<OperationChainDe
     @Override
     public OperationDocumentation adapt(OperationChainDescriptor src) {
         OperationDocumentation doc = new OperationDocumentation(src.getId());
+        doc.enabled = src.enabled;
         doc.label = src.getLabel();
         doc.requires = src.getRequires();
         doc.category = src.getCategory();

@@ -29,6 +29,9 @@ public class OperationScriptingDescriptor {
     @XNode("@id")
     protected String id;
 
+    @XNode("@enabled")
+    public Boolean enabled = true;
+
     @XNode("inputType")
     protected String inputType;
 

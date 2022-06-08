@@ -1,6 +1,6 @@
 <component name="org.nuxeo.ecm.dummy.chain">
   <extension target="org.nuxeo.ecm.core.operation.OperationServiceComponent" point="chains">
-    <chain id="HelloWorldOperationChain">
+    <chain id="HelloWorldOperationChain" enabled="false">
       <operation id="Seam.GetCurrentDocument"/>
       <operation id="Document.SetProperty">
         <param type="serializable" name="value">Hello World !</param>
