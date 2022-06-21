@@ -46,7 +46,6 @@
     <junit.version>4.12</junit.version>
     <jersey.version>1.18.3</jersey.version>
     <jsonlib.version>2.4</jsonlib.version>
-    <xmlapis.version>1.4.01</xmlapis.version>
     <osgi.version>4.2.0</osgi.version>
     <javassist.version>3.20.0-GA</javassist.version>
     <dom4j.version>2.1.1</dom4j.version>
@@ -123,11 +122,6 @@
       <groupId>org.javassist</groupId>
       <artifactId>javassist</artifactId>
       <version>${javassist.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>xml-apis</groupId>
-      <artifactId>xml-apis</artifactId>
-      <version>${xmlapis.version}</version>
     </dependency>
 
     <!-- Tests Dependencies -->
