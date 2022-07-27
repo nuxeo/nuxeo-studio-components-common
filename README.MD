@@ -10,9 +10,15 @@ Library that extracts Nuxeo Components to Nuxeo Studio's registries format
 
     mvn clean install
     
-## Sample
+## Release
 
-TODO
+This project uses jgitver for versioning, see https://github.com/jgitver/jgitver.
+
+To release this project just push an annotated Git tag following the 'vX.Y.Z' pattern on any branch.
+```
+git tag -a vX.Y.Z -m "Release X.Y.Z"
+git push origin vX.Y.Z
+```
 
 # Contributing / Reporting issues
 
