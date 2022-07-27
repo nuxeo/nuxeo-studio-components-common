@@ -3,7 +3,7 @@ name: Nuxeo Studio Components Common build with Maven
 
 on:
   pull_request:
-    types: [opened]
+    types: [opened, synchronize]
     branches: [master]
   push:
     branches: [master]
