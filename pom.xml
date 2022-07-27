@@ -234,7 +234,7 @@
       <repositories>
         <repository>
           <id>internal-releases</id>
-          <url>http://mavenin.nuxeo.com/nexus/content/groups/internal-releases</url>
+          <url>https://packages.nuxeo.com/repository/maven-internal-build</url>
           <releases>
             <enabled>true</enabled>
           </releases>
@@ -244,7 +244,7 @@
         </repository>
         <repository>
           <id>internal-snapshots</id>
-          <url>http://mavenin.nuxeo.com/nexus/content/groups/internal-snapshots</url>
+          <url>https://packages.nuxeo.com/repository/maven-private-snapshots</url>
           <releases>
             <enabled>false</enabled>
           </releases>
@@ -257,7 +257,7 @@
       <pluginRepositories>
         <pluginRepository>
           <id>internal-releases</id>
-          <url>http://mavenin.nuxeo.com/nexus/content/groups/internal-releases</url>
+          <url>https://packages.nuxeo.com/repository/maven-internal-build</url>
           <name>Nuxeo virtual release repository</name>
           <releases>
             <enabled>true</enabled>
@@ -268,7 +268,7 @@
         </pluginRepository>
         <pluginRepository>
           <id>internal-snapshots</id>
-          <url>http://mavenin.nuxeo.com/nexus/content/groups/internal-snapshots</url>
+          <url>https://packages.nuxeo.com/repository/maven-private-snapshots</url>
           <name>Nuxeo virtual snapshot repository</name>
           <releases>
             <enabled>false</enabled>
@@ -282,7 +282,7 @@
       <distributionManagement>
         <snapshotRepository>
           <id>daily-snapshots</id>
-          <url>http://mavenin.nuxeo.com/nexus/content/repositories/daily-snapshots</url>
+          <url>https://packages.nuxeo.com/repository/maven-public-snapshots</url>
           <uniqueVersion>true</uniqueVersion>
         </snapshotRepository>
       </distributionManagement>
@@ -292,7 +292,7 @@
   <repositories>
     <repository>
       <id>public</id>
-      <url>http://maven.nuxeo.org/nexus/content/groups/public</url>
+      <url>https://packages.nuxeo.com/repository/maven-public</url>
       <releases>
         <enabled>true</enabled>
       </releases>
@@ -302,7 +302,7 @@
     </repository>
     <repository>
       <id>public-snapshot</id>
-      <url>http://maven.nuxeo.org/nexus/content/groups/public-snapshot</url>
+      <url>https://packages.nuxeo.com/repository/maven-public-snapshots</url>
       <releases>
         <enabled>false</enabled>
       </releases>
@@ -327,7 +327,7 @@
   <pluginRepositories>
     <pluginRepository>
       <id>public</id>
-      <url>http://maven.nuxeo.org/nexus/content/groups/public</url>
+      <url>https://packages.nuxeo.com/repository/maven-public</url>
       <name>Nuxeo releases</name>
       <releases>
         <enabled>true</enabled>
@@ -340,12 +340,12 @@
 
   <distributionManagement>
     <repository>
-      <id>public-releases</id>
-      <url>http://mavenin.nuxeo.com/nexus/content/repositories/public-releases</url>
+      <id>packages</id>
+      <url>https://packages.nuxeo.com/repository/maven-public-releases</url>
     </repository>
     <snapshotRepository>
-      <id>public-snapshots</id>
-      <url>http://mavenin.nuxeo.com/nexus/content/repositories/public-snapshots</url>
+      <id>packages</id>
+      <url>https://packages.nuxeo.com/repository/maven-public-snapshots</url>
       <uniqueVersion>true</uniqueVersion>
     </snapshotRepository>
   </distributionManagement>
