@@ -1,0 +1,52 @@
+# Main workflow for building and publishing the project nuxeo-studio-components-common
+name: Nuxeo Studio Components Common build with Maven
+
+on:
+  pull_request:
+    types: [opened]
+    branches: [master]
+  push:
+    branches: [master]
+    tags: 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Allow jgitver versionning by fetching all tags and branches
+      - name: Set up JDK 8
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '8'
+          cache: maven
+      - name: Setup Maven Settings
+        uses: s4u/maven-settings-action@v2.6.0
+        with:
+          mirrors: '[{"id": "team", "name": "team", "mirrorOf": "external:*", "url": "https://nexus-jx.nos.build.nuxeo.com/repository/maven-group/"}]'
+          servers: |
+            [{
+                "id": "packages",
+                "username": "${{ secrets.M2_CREDENTIALS_PACKAGES_USERNAME }}",
+                "password": "${{ secrets.M2_CREDENTIALS_PACKAGES_PASSWORD }}"
+            },{
+                "id": "team",
+                "username": "${{ secrets.M2_CREDENTIALS_TEAM_USERNAME }}",
+                "password": "${{ secrets.M2_CREDENTIALS_TEAM_PASSWORD }}"
+            }]
+      - name: Force branch name for jgitver on PR
+        if: ${{ github.event_name == 'pull_request'}}
+        run: git checkout ${GITHUB_HEAD_REF}
+      - name: Force fetching remote tags for jgitver releases
+        run: git fetch --tags -f
+      - name: Build with Maven
+        run: mvn package
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v3
+        if: always() # always run even if the previous step fails
+        with:
+          report_paths: '**/target/surefire-reports/TEST-*.xml'
+      - name: Publish with Maven
+        run: mvn deploy -DskipTests
