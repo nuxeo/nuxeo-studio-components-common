@@ -3,7 +3,7 @@
 
   <groupId>org.nuxeo.studio</groupId>
   <artifactId>nuxeo-studio-components-common</artifactId>
-  <version>0.1.12-SNAPSHOT</version>
+  <version>0.0.0-SNAPSHOT</version>
   <name>Nuxeo studio components common parent</name>
   <url>http://www.nuxeo.com</url>
   <organization>
@@ -20,18 +20,6 @@
     <system>jira</system>
     <url>https://jira.nuxeo.com/browse/NXBT</url>
   </issueManagement>
-  <ciManagement>
-    <system>Jenkins</system>
-    <url>https://qa.nuxeo.org/jenkins/</url>
-    <notifiers>
-      <notifier>
-        <type>mail</type>
-        <configuration>
-          <address>ecm-qa@lists.nuxeo.com</address>
-        </configuration>
-      </notifier>
-    </notifiers>
-  </ciManagement>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

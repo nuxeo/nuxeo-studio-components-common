@@ -1,4 +1,4 @@
-[![Build Status](https://qa.nuxeo.org/jenkins/buildStatus/icon?job=Misc/tools_nuxeo-studio-components-common-master)](https://qa.nuxeo.org/jenkins/job/Misc/job/tools_nuxeo-studio-components-common-master/)
+![status workflow](https://github.com/nuxeo/nuxeo-studio-components-common/actions/workflows/main.yaml/badge.svg)
 
 # About
 
