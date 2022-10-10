@@ -150,9 +150,9 @@ public class JacksonConverter {
             ObjectMapper om = new ObjectMapper();
             Object targetAdapted = adapters.getOrDefault(target.getClass(), defaultAdapter).adapt(target);
 
-            // Mainly occurred with {@code SchemaAdapter#adapt} when schema file is missing.
+
             if (targetAdapted == null) {
-                log.warn("Unable to adapt: \"" + target + "\" (" + target.getClass() + ")");
+                // Mainly occurred when adapter filter out the target, just ignoring
                 return null;
             }
 
