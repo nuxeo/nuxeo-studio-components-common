@@ -80,7 +80,7 @@ public class OperationReader {
 
     public OperationReader(String className) {
         try {
-            ClassPool aDefault = ClassPool.getDefault();
+            ClassPool aDefault = new ClassPool();
             aDefault.insertClassPath(new LoaderClassPath(ExtractorContext.getClassloader()));
 
             ctClass = aDefault.get(className);
