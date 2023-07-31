@@ -71,7 +71,7 @@ public class TestContributionsLoader extends AbstractExtractorTest {
         assertThat(imgResourceDescriptors).hasSize(4);
 
         List<CSVResourceDescriptor> csvResourceDescriptors = holder.getContributions(CSVResourceDescriptor.class);
-        assertThat(csvResourceDescriptors).hasSize(4);
+        assertThat(csvResourceDescriptors).hasSize(5);
 
         List<XSDResourceDescriptor> xsdResourceDescriptors = holder.getContributions(XSDResourceDescriptor.class);
         assertThat(xsdResourceDescriptors).hasSize(4);
