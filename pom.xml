@@ -328,11 +328,11 @@
 
   <distributionManagement>
     <repository>
-      <id>packages</id>
+      <id>packages.nuxeo.com</id>
       <url>https://packages.nuxeo.com/repository/maven-public-releases</url>
     </repository>
     <snapshotRepository>
-      <id>packages</id>
+      <id>packages.nuxeo.com</id>
       <url>https://packages.nuxeo.com/repository/maven-public-snapshots</url>
       <uniqueVersion>true</uniqueVersion>
     </snapshotRepository>
