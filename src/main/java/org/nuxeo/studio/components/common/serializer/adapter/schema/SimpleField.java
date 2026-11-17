@@ -21,16 +21,28 @@ package org.nuxeo.studio.components.common.serializer.adapter.schema;
 
 public class SimpleField implements Field {
 
+    public static final String DIRECTORY_RESOLVER = "directoryResolver";
+
     private boolean isArray;
 
     private String name;
 
     private String type;
 
+    private String directory;
+
     public SimpleField(String name, String type, boolean isArray) {
+        this(name, type, isArray, null);
+    }
+
+    /**
+     * @param directory the directory of the field's {@value #DIRECTORY_RESOLVER}, or {@code null} when it has none
+     */
+    public SimpleField(String name, String type, boolean isArray, String directory) {
         this.name = name;
         this.isArray = isArray;
         this.type = type;
+        this.directory = directory;
     }
 
     @Override
@@ -56,9 +68,16 @@ public class SimpleField implements Field {
         return type + (isArray ? "[]" : "");
     }
 
+    /**
+     * @return the directory of the field's {@value #DIRECTORY_RESOLVER}, or {@code null} when it has none
+     */
+    public String getDirectory() {
+        return directory;
+    }
+
     @Override
     public Field copy(String name, Boolean isArray) {
-        return new SimpleField(name, type, isArray);
+        return new SimpleField(name, type, isArray, directory);
     }
 
     @Override
@@ -74,7 +93,9 @@ public class SimpleField implements Field {
             return false;
         if (name != null ? !name.equals(that.name) : that.name != null)
             return false;
-        return type != null ? type.equals(that.type) : that.type == null;
+        if (type != null ? !type.equals(that.type) : that.type != null)
+            return false;
+        return directory != null ? directory.equals(that.directory) : that.directory == null;
     }
 
     @Override
@@ -82,6 +103,7 @@ public class SimpleField implements Field {
         int result = (isArray ? 1 : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (directory != null ? directory.hashCode() : 0);
         return result;
     }
 }

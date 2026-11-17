@@ -85,7 +85,9 @@ public class TestSerializer extends AbstractExtractorTest {
 
     public static final String EXPECTED_JSON_EVENT = "{\"myFirstEvent\": \"My first event\", \"my_second-event\": \"My second event\"}";
 
-    public static final String EXPECTED_JSON_SCHEMA = "{\"dublincore\":{\"@prefix\":\"dc\",\"description\":\"string\",\"created\":\"date\",\"coverage\":\"string\",\"title\":\"string\",\"complex\":{\"fields\":{\"mime-type\":\"string\",\"data\":\"binary\",\"name\":\"string\",\"length\":\"long\",\"digest\":\"string\",\"encoding\":\"string\"},\"type\":\"complex\"},\"modified\":\"date\",\"nature\":\"string\",\"lastContributor\":\"string\",\"content\":\"blob\",\"source\":\"string\",\"publisher\":\"string\"},\"simpletype\":{\"@prefix\":\"st\",\"title\":\"string\",\"description\":\"string\",\"coverage\":\"string\"}}";
+    public static final String EXPECTED_JSON_SCHEMA = "{\"dublincore\":{\"@prefix\":\"dc\",\"description\":\"string\",\"created\":\"date\",\"coverage\":{\"type\":\"string\",\"referenceConfiguration\":{\"name\":\"directoryResolver\",\"parameters\":{\"directory\":\"l10ncoverage\"}}},\"title\":\"string\",\"complex\":{\"fields\":{\"mime-type\":\"string\",\"data\":\"binary\",\"name\":\"string\",\"length\":\"long\",\"digest\":\"string\",\"encoding\":\"string\"},\"type\":\"complex\"},\"modified\":\"date\",\"nature\":\"string\",\"lastContributor\":\"string\",\"content\":\"blob\",\"source\":\"string\",\"publisher\":\"string\"},\"simpletype\":{\"@prefix\":\"st\",\"title\":\"string\",\"description\":\"string\",\"coverage\":{\"type\":\"string\",\"referenceConfiguration\":{\"name\":\"directoryResolver\",\"parameters\":{\"directory\":\"l10ncoverage\"}}}}}";
+
+    public static final String EXPECTED_JSON_DIRECTORY_RESOLVER_SCHEMA = "{\"directoryresolver\":{\"@prefix\":\"drt\",\"title\":\"string\",\"tags\":\"string\",\"codes\":\"string\",\"itemTypeList\":\"string\",\"accessibility\":{\"type\":\"string\",\"referenceConfiguration\":{\"name\":\"directoryResolver\",\"parameters\":{\"directory\":\"NXS7530SourceVocab\"}}},\"keywords\":{\"type\":\"string[]\",\"referenceConfiguration\":{\"name\":\"directoryResolver\",\"parameters\":{\"directory\":\"MyVocab\"}}},\"reviewer\":\"string\",\"otherResolverWithDirectory\":\"string\",\"classification\":{\"type\":\"complex\",\"fields\":{\"level\":\"string\",\"topics\":\"string\"}},\"noDirectory\":\"string\",\"blankDirectory\":\"string\"},\"directoryresolverprefix\":{\"@prefix\":\"drp\",\"accessibility\":{\"type\":\"string\",\"referenceConfiguration\":{\"name\":\"directoryResolver\",\"parameters\":{\"directory\":\"NXS7530SourceVocab\"}}},\"keywords\":{\"type\":\"string[]\",\"referenceConfiguration\":{\"name\":\"directoryResolver\",\"parameters\":{\"directory\":\"MyVocab\"}}},\"notReference\":\"string\",\"onlyResolverIsReference\":\"string\",\"onlyDirectoryIsReference\":\"string\"}}";
 
     public static final String EXPECTED_JSON_DOCTYPE = "{\"File\": {\"parent\":\"Document\",\"schemas\":[\"common\",\"file\",\"dublincore\",\"uid\"],\"facets\":[\"Downloadable\",\"Versionable\"], \"enabled\": true}}";
 
@@ -154,6 +156,18 @@ public class TestSerializer extends AbstractExtractorTest {
     @Test
     public void testSchemaSerializer() throws URISyntaxException {
         assertSerialization("schema-contrib.xml", SchemaBindingDescriptor.class, 3, EXPECTED_JSON_SCHEMA);
+    }
+
+    @Test
+    public void testSchemaSerializerWithDirectoryResolver() throws URISyntaxException {
+        assertSerialization("schema-directoryresolver-contrib.xml", SchemaBindingDescriptor.class, 2,
+                EXPECTED_JSON_DIRECTORY_RESOLVER_SCHEMA);
+
+        // The exact string, as keys keep their order: "type" comes first, as in the platform registries
+        ContributionsHolder holder = loadComponent("schema-directoryresolver-contrib.xml");
+        StudioSerializer serializer = new StudioSerializer(holder, ExtractorOptions.DEFAULT);
+        assertEquals(EXPECTED_JSON_DIRECTORY_RESOLVER_SCHEMA,
+                serializer.serializeDescriptors(SchemaBindingDescriptor.class));
     }
 
     @Test
