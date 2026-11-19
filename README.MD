@@ -8,6 +8,14 @@ Library that extracts Nuxeo Components to Nuxeo Studio's registries format
 
 ## Build
 
+Requirements:
+- JDK 17 or later (the Nuxeo LTS 2023 test dependencies are Java 17 bytecode). The produced jar still targets Java 8.
+- Read access to the Nuxeo internal Maven repository: the Nuxeo LTS test dependencies are only published to
+  `https://packages.nuxeo.com/repository/maven-internal`, using the credentials of the `packages.nuxeo.com` server in
+  your Maven `settings.xml`.
+
+Then run:
+
     mvn clean install
     
 ## Release
