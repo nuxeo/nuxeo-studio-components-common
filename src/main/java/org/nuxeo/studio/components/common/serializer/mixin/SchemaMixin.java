@@ -81,7 +81,25 @@ public abstract class SchemaMixin {
         }
 
         protected void writeSimple(JsonGenerator gen, SimpleField field) throws IOException {
-            gen.writeObjectField(field.getName(), transformType(field.getTypeJson()));
+            String type = transformType(field.getTypeJson());
+            if (StringUtils.isBlank(field.getDirectory())) {
+                gen.writeObjectField(field.getName(), type);
+                return;
+            }
+
+            // A Directory field, in the form of the platform registries, which Studio reads the resolver from
+            gen.writeFieldName(field.getName());
+            gen.writeStartObject();
+            gen.writeObjectField("type", type);
+            gen.writeFieldName("referenceConfiguration");
+            gen.writeStartObject();
+            gen.writeStringField("name", SimpleField.DIRECTORY_RESOLVER);
+            gen.writeFieldName("parameters");
+            gen.writeStartObject();
+            gen.writeStringField("directory", field.getDirectory());
+            gen.writeEndObject();
+            gen.writeEndObject();
+            gen.writeEndObject();
         }
 
         protected String transformType(String type) {

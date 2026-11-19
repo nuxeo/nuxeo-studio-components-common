@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<xs:schema targetNamespace="http://www.nuxeo.org/ecm/schemas/directoryresolverprefixtest/"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:nxs="http://www.nuxeo.org/ecm/schemas/directoryresolverprefixtest/"
+           xmlns:xref="http://www.nuxeo.org/ecm/schemas/core/external-references/"
+           xmlns:ref="http://www.nuxeo.org/ecm/schemas/directoryresolverprefixtest/notreferences/">
+
+  <!-- The external references namespace is bound to xref, as a hand-written XSD may do -->
+  <xs:element name="accessibility">
+    <xs:simpleType>
+      <xs:restriction base="xs:string" xref:resolver="directoryResolver" xref:directory="NXS7530SourceVocab"/>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="keywords">
+    <xs:simpleType>
+      <xs:list>
+        <xs:simpleType>
+          <xs:restriction base="xs:string" xref:resolver="directoryResolver" xref:directory="MyVocab"/>
+        </xs:simpleType>
+      </xs:list>
+    </xs:simpleType>
+  </xs:element>
+
+  <!-- Here ref is bound to another namespace: these attributes are not external references -->
+  <xs:element name="notReference">
+    <xs:simpleType>
+      <xs:restriction base="xs:string" ref:resolver="directoryResolver" ref:directory="NotAVocab"/>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="onlyResolverIsReference">
+    <xs:simpleType>
+      <xs:restriction base="xs:string" xref:resolver="directoryResolver" ref:directory="NotAVocab"/>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="onlyDirectoryIsReference">
+    <xs:simpleType>
+      <xs:restriction base="xs:string" ref:resolver="directoryResolver" xref:directory="NotAVocab"/>
+    </xs:simpleType>
+  </xs:element>
+
+</xs:schema>

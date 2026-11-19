@@ -22,7 +22,9 @@ package org.nuxeo.studio.components.common.serializer.adapter.schema;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
+import org.dom4j.Element;
 import org.dom4j.Node;
+import org.dom4j.QName;
 import org.dom4j.io.SAXReader;
 import org.nuxeo.studio.components.common.runtime.ExtractorContext;
 
@@ -33,6 +35,8 @@ import java.util.List;
 import java.util.Map;
 
 public class SimpleSchemaReader {
+    public static final String EXTERNAL_REFERENCES_NS = "http://www.nuxeo.org/ecm/schemas/core/external-references/";
+
     protected Map<String, Field> types = new HashMap<>();
 
     protected List<Field> fields = new ArrayList<>();
@@ -67,8 +71,37 @@ public class SimpleSchemaReader {
 
     public void load() {
         doc.selectNodes("/xs:schema/xs:element").forEach(n -> {
-            fields.add(fieldFromNode(n));
+            fields.add(withDirectory(n, fieldFromNode(n)));
         });
+    }
+
+    /**
+     * Keeps the directory of a top-level Directory field: an element with no type attribute, whose inline restriction,
+     * single or in a list, has a directoryResolver with a non-blank directory. A list Directory field stays a list.
+     * Any other field is returned as it is. Sub-fields and named types are not read here, so they keep no directory.
+     */
+    protected Field withDirectory(Node element, Field field) {
+        if (field.isComplex() || StringUtils.isNotEmpty(element.valueOf("@type"))) {
+            return field;
+        }
+
+        boolean isArray = false;
+        Node restriction = element.selectSingleNode("./xs:simpleType/xs:restriction");
+        if (restriction == null) {
+            restriction = element.selectSingleNode("./xs:simpleType/xs:list/xs:simpleType/xs:restriction");
+            isArray = true;
+        }
+        if (!(restriction instanceof Element)) {
+            return field;
+        }
+
+        // By namespace, not by prefix: an XSD may bind another prefix than "ref" to it
+        String resolver = ((Element) restriction).attributeValue(QName.get("resolver", EXTERNAL_REFERENCES_NS));
+        String directory = ((Element) restriction).attributeValue(QName.get("directory", EXTERNAL_REFERENCES_NS));
+        if (!SimpleField.DIRECTORY_RESOLVER.equals(resolver) || StringUtils.isBlank(directory)) {
+            return field;
+        }
+        return new SimpleField(field.getName(), ((SimpleField) field).getType(), isArray, directory);
     }
 
     protected void loadExternalTypes() {
